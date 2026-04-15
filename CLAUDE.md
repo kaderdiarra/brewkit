@@ -11,12 +11,13 @@ Personal MacBook setup reference + interactive installer. Two main parts:
 ## Architecture
 
 ```
-apps/              → macOS applications (one .md per app)
-dev-tools/         → CLI tools and runtimes
-editor/            → Code editor setup
-  extensions/      → Editor extensions (one .md per extension or group)
-system/            → macOS system preferences
-references/        → External dotfiles and setup repos
+src/               → Configuration reference docs
+  apps/            → macOS applications (one .md per app)
+  dev-tools/       → CLI tools and runtimes
+  editor/          → Code editor setup
+    extensions/    → Editor extensions (one .md per extension or group)
+  system/          → macOS system preferences
+  references/      → External dotfiles and setup repos
 installer/         → Interactive CLI installer
   lib/             → Shared utilities (colors, checks, UI wrappers, logging)
   registry/        → Data-driven tool/app definitions (the source of truth)

@@ -22,7 +22,7 @@ run_phase_configure() {
 
   if [[ ${#SELECTED_EXTENSIONS[@]} -gt 0 ]] && is_vscode_installed; then
     echo ""
-    print_info "VS Code extensions installed. See editor/vscode.md for recommended settings."
+    print_info "VS Code extensions installed. See src/editor/vscode.md for recommended settings."
   fi
 }
 

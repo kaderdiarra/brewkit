@@ -68,41 +68,41 @@ make help              # Show all available commands
 
 | App | Description |
 |-----|-------------|
-| [AltTab](apps/alttab.md) | Windows-style alt-tab with window previews |
-| [Arc](apps/arc.md) | Chromium browser with sidebar tabs & workspaces |
-| [DBeaver](apps/dbeaver.md) | Universal database management tool |
-| [Hidden Bar](apps/hidden-bar.md) | Menu bar icon manager |
-| [iTerm2](apps/iterm2.md) | Terminal emulator — split panes, search, profiles |
-| [itsycal](apps/itsycal.md) | Menu bar calendar with events |
-| [Kap](apps/kap.md) | Screen recorder — GIF, MP4, WebM |
-| [Keka](apps/keka.md) | File archiver — 7z, ZIP, RAR |
-| [NotchNook](apps/notchnook.md) | MacBook notch utility area |
-| [Raycast](apps/raycast.md) | Spotlight replacement with extensions |
-| [Rectangle](apps/rectangle.md) | Window management with keyboard shortcuts |
-| [Stats](apps/stats.md) | Menu bar system monitor |
-| [Sublime Text](apps/sublime-text.md) | Lightweight text editor for quick edits |
-| [Time Out](apps/time-out.md) | Break timer to prevent strain |
+| [AltTab](src/apps/alttab.md) | Windows-style alt-tab with window previews |
+| [Arc](src/apps/arc.md) | Chromium browser with sidebar tabs & workspaces |
+| [DBeaver](src/apps/dbeaver.md) | Universal database management tool |
+| [Hidden Bar](src/apps/hidden-bar.md) | Menu bar icon manager |
+| [iTerm2](src/apps/iterm2.md) | Terminal emulator — split panes, search, profiles |
+| [itsycal](src/apps/itsycal.md) | Menu bar calendar with events |
+| [Kap](src/apps/kap.md) | Screen recorder — GIF, MP4, WebM |
+| [Keka](src/apps/keka.md) | File archiver — 7z, ZIP, RAR |
+| [NotchNook](src/apps/notchnook.md) | MacBook notch utility area |
+| [Raycast](src/apps/raycast.md) | Spotlight replacement with extensions |
+| [Rectangle](src/apps/rectangle.md) | Window management with keyboard shortcuts |
+| [Stats](src/apps/stats.md) | Menu bar system monitor |
+| [Sublime Text](src/apps/sublime-text.md) | Lightweight text editor for quick edits |
+| [Time Out](src/apps/time-out.md) | Break timer to prevent strain |
 
 ### Dev Tools
 
 | Tool | Description |
 |------|-------------|
-| [CLI Tools](dev-tools/cli-tools.md) | wget, telnet, tldr |
-| [Fira Code](dev-tools/fira-code.md) | Developer font with programming ligatures |
-| [Git](dev-tools/git.md) | Version control + SSH key setup for GitHub |
-| [Homebrew](dev-tools/homebrew.md) | macOS package manager |
-| [NVM](dev-tools/nvm.md) | Node.js version manager + global npm packages |
-| [Oh My Zsh](dev-tools/oh-my-zsh.md) | Zsh framework — themes, plugins, aliases |
+| [CLI Tools](src/dev-tools/cli-tools.md) | wget, telnet, tldr |
+| [Fira Code](src/dev-tools/fira-code.md) | Developer font with programming ligatures |
+| [Git](src/dev-tools/git.md) | Version control + SSH key setup for GitHub |
+| [Homebrew](src/dev-tools/homebrew.md) | macOS package manager |
+| [NVM](src/dev-tools/nvm.md) | Node.js version manager + global npm packages |
+| [Oh My Zsh](src/dev-tools/oh-my-zsh.md) | Zsh framework — themes, plugins, aliases |
 
 ### System
 
 | Config | Description |
 |--------|-------------|
-| [macOS Settings](system/macos-settings.md) | Dock, Finder, hot corners, login items, display |
+| [macOS Settings](src/system/macos-settings.md) | Dock, Finder, hot corners, login items, display |
 
 ### Editor — VS Code
 
-[Setup & settings](editor/vscode.md) | [46 curated extensions](editor/extensions/)
+[Setup & settings](src/editor/vscode.md) | [46 curated extensions](src/editor/extensions/)
 
 <details>
 <summary><strong>Extensions by category</strong> (click to expand)</summary>
@@ -111,97 +111,97 @@ make help              # Show all available commands
 
 | Extension | Description |
 |-----------|-------------|
-| [Auto Close Tag](editor/extensions/auto-close-tag.md) | Auto-insert closing HTML/XML tags |
-| [Auto Rename Tag](editor/extensions/auto-rename-tag.md) | Auto-rename paired HTML/XML tags |
-| [Code Spell Checker](editor/extensions/code-spell-checker.md) | Catch spelling mistakes in code |
-| [DotENV](editor/extensions/dotenv.md) | Syntax highlighting for .env files |
-| [Error Lens](editor/extensions/error-lens.md) | Show errors/warnings inline |
-| [ESLint](editor/extensions/eslint.md) | JS/TS linting with inline errors and auto-fix |
-| [Prettier](editor/extensions/prettier.md) | Opinionated code formatter |
-| [Pretty TypeScript Errors](editor/extensions/pretty-typescript-errors.md) | Human-readable TypeScript errors |
+| [Auto Close Tag](src/editor/extensions/auto-close-tag.md) | Auto-insert closing HTML/XML tags |
+| [Auto Rename Tag](src/editor/extensions/auto-rename-tag.md) | Auto-rename paired HTML/XML tags |
+| [Code Spell Checker](src/editor/extensions/code-spell-checker.md) | Catch spelling mistakes in code |
+| [DotENV](src/editor/extensions/dotenv.md) | Syntax highlighting for .env files |
+| [Error Lens](src/editor/extensions/error-lens.md) | Show errors/warnings inline |
+| [ESLint](src/editor/extensions/eslint.md) | JS/TS linting with inline errors and auto-fix |
+| [Prettier](src/editor/extensions/prettier.md) | Opinionated code formatter |
+| [Pretty TypeScript Errors](src/editor/extensions/pretty-typescript-errors.md) | Human-readable TypeScript errors |
 
 #### Productivity
 
 | Extension | Description |
 |-----------|-------------|
-| [Auto Barrel](editor/extensions/auto-barrel.md) | Auto-generate barrel (index.ts) export files |
-| [Better Comments](editor/extensions/better-comments.md) | Color-coded comments by type |
-| [Bookmarks](editor/extensions/bookmarks.md) | Mark and jump between bookmarked lines |
-| [Code Runner](editor/extensions/code-runner.md) | Run code snippets in 40+ languages |
-| [CodeSnap](editor/extensions/codesnap.md) | Take beautiful code screenshots |
-| [Font Size Shortcuts](editor/extensions/font-size-shortcuts.md) | Change font size without zooming UI |
-| [Import Cost](editor/extensions/import-cost.md) | Show imported package bundle size inline |
-| [Paste JSON as Code](editor/extensions/paste-json-as-code.md) | Convert JSON to TypeScript types and more |
-| [Peacock](editor/extensions/peacock.md) | Color-code your workspaces |
-| [Project Manager](editor/extensions/project-manager.md) | Switch between projects quickly |
-| [Todo Tree](editor/extensions/todo-tree.md) | Tree view of TODO/FIXME across project |
-| [Turbo Console Log](editor/extensions/turbo-console-log.md) | Insert console.log with shortcuts |
+| [Auto Barrel](src/editor/extensions/auto-barrel.md) | Auto-generate barrel (index.ts) export files |
+| [Better Comments](src/editor/extensions/better-comments.md) | Color-coded comments by type |
+| [Bookmarks](src/editor/extensions/bookmarks.md) | Mark and jump between bookmarked lines |
+| [Code Runner](src/editor/extensions/code-runner.md) | Run code snippets in 40+ languages |
+| [CodeSnap](src/editor/extensions/codesnap.md) | Take beautiful code screenshots |
+| [Font Size Shortcuts](src/editor/extensions/font-size-shortcuts.md) | Change font size without zooming UI |
+| [Import Cost](src/editor/extensions/import-cost.md) | Show imported package bundle size inline |
+| [Paste JSON as Code](src/editor/extensions/paste-json-as-code.md) | Convert JSON to TypeScript types and more |
+| [Peacock](src/editor/extensions/peacock.md) | Color-code your workspaces |
+| [Project Manager](src/editor/extensions/project-manager.md) | Switch between projects quickly |
+| [Todo Tree](src/editor/extensions/todo-tree.md) | Tree view of TODO/FIXME across project |
+| [Turbo Console Log](src/editor/extensions/turbo-console-log.md) | Insert console.log with shortcuts |
 
 #### IntelliSense
 
 | Extension | Description |
 |-----------|-------------|
-| [IntelliSense (Path + npm)](editor/extensions/intellisense.md) | Autocomplete file paths and npm modules |
-| [PostCSS IntelliSense](editor/extensions/postcss-intellisense.md) | Syntax highlighting & intellisense for PostCSS |
-| [Tailwind CSS IntelliSense](editor/extensions/tailwind-css-intellisense.md) | Autocomplete & preview for Tailwind classes |
+| [IntelliSense (Path + npm)](src/editor/extensions/intellisense.md) | Autocomplete file paths and npm modules |
+| [PostCSS IntelliSense](src/editor/extensions/postcss-intellisense.md) | Syntax highlighting & intellisense for PostCSS |
+| [Tailwind CSS IntelliSense](src/editor/extensions/tailwind-css-intellisense.md) | Autocomplete & preview for Tailwind classes |
 
 #### Snippets
 
 | Extension | Description |
 |-----------|-------------|
-| [ES7+ React Snippets](editor/extensions/react-snippets.md) | React, Redux, and JavaScript snippets |
+| [ES7+ React Snippets](src/editor/extensions/react-snippets.md) | React, Redux, and JavaScript snippets |
 
 #### Git
 
 | Extension | Description |
 |-----------|-------------|
-| [GitHub Copilot](editor/extensions/github-copilot.md) | AI-powered code completion |
-| [GitHub Pull Requests](editor/extensions/github-pr.md) | Review and manage PRs from VS Code |
-| [GitLens](editor/extensions/gitlens.md) | Git blame, history, and code authorship |
+| [GitHub Copilot](src/editor/extensions/github-copilot.md) | AI-powered code completion |
+| [GitHub Pull Requests](src/editor/extensions/github-pr.md) | Review and manage PRs from VS Code |
+| [GitLens](src/editor/extensions/gitlens.md) | Git blame, history, and code authorship |
 
 #### Testing
 
 | Extension | Description |
 |-----------|-------------|
-| [Testing (Jest + Playwright)](editor/extensions/testing.md) | Jest Runner, Jest, Playwright integration |
+| [Testing (Jest + Playwright)](src/editor/extensions/testing.md) | Jest Runner, Jest, Playwright integration |
 
 #### Tools
 
 | Extension | Description |
 |-----------|-------------|
-| [Docker](editor/extensions/docker.md) | Manage containers and images from VS Code |
-| [Thunder Client](editor/extensions/thunder-client.md) | Lightweight REST API client |
-| [tldraw](editor/extensions/tldraw.md) | Infinite canvas whiteboard and diagramming |
+| [Docker](src/editor/extensions/docker.md) | Manage containers and images from VS Code |
+| [Thunder Client](src/editor/extensions/thunder-client.md) | Lightweight REST API client |
+| [tldraw](src/editor/extensions/tldraw.md) | Infinite canvas whiteboard and diagramming |
 
 #### Media
 
 | Extension | Description |
 |-----------|-------------|
-| [Paste Image & Image Preview](editor/extensions/paste-image-preview.md) | Paste & preview images in code comments |
+| [Paste Image & Image Preview](src/editor/extensions/paste-image-preview.md) | Paste & preview images in code comments |
 
 #### Remote Development
 
 | Extension | Description |
 |-----------|-------------|
-| [Remote Development](editor/extensions/remote-development.md) | SSH, Containers, Remote Explorer |
+| [Remote Development](src/editor/extensions/remote-development.md) | SSH, Containers, Remote Explorer |
 
 #### Languages
 
 | Extension | Description |
 |-----------|-------------|
-| [Language Support (YAML, MDX)](editor/extensions/language-support.md) | YAML and MDX language support |
+| [Language Support (YAML, MDX)](src/editor/extensions/language-support.md) | YAML and MDX language support |
 
 #### Vim
 
 | Extension | Description |
 |-----------|-------------|
-| [Vim Extension](editor/extensions/vim.md) | Vim keybindings + cheatsheet + learn-vim tutorial |
+| [Vim Extension](src/editor/extensions/vim.md) | Vim keybindings + cheatsheet + learn-vim tutorial |
 
 #### Themes & Icons
 
 | Extension | Description |
 |-----------|-------------|
-| [Themes & Icons](editor/extensions/theme-and-icons.md) | GitHub Theme, One Dark Pro, Material icons |
+| [Themes & Icons](src/editor/extensions/theme-and-icons.md) | GitHub Theme, One Dark Pro, Material icons |
 
 </details>
 
@@ -209,18 +209,19 @@ make help              # Show all available commands
 
 ```
 .
-├── apps/              # macOS applications (one doc per app)
-├── dev-tools/         # CLI tools, runtimes, fonts
-├── editor/            # VS Code setup & extensions
-│   └── extensions/    # One doc per extension (or grouped)
-├── system/            # macOS system preferences
-├── references/        # External dotfiles & inspiration
-├── installer/         # Interactive CLI installer
-│   ├── lib/           # Shared utilities (colors, checks, UI, logging)
-│   ├── registry/      # Data-driven tool/app definitions
-│   ├── phases/        # Installation phases
-│   └── bundles.sh     # Predefined setup bundles
-└── install.sh         # Entry point
+├── src/                # Configuration reference docs
+│   ├── apps/           # macOS applications (one doc per app)
+│   ├── dev-tools/      # CLI tools, runtimes, fonts
+│   ├── editor/         # VS Code setup & extensions
+│   │   └── extensions/ # One doc per extension (or grouped)
+│   ├── system/         # macOS system preferences
+│   └── references/     # External dotfiles & inspiration
+├── installer/          # Interactive CLI installer
+│   ├── lib/            # Shared utilities (colors, checks, UI, logging)
+│   ├── registry/       # Data-driven tool/app definitions
+│   ├── phases/         # Installation phases
+│   └── bundles.sh      # Predefined setup bundles
+└── install.sh          # Entry point
 ```
 
 ## Adding New Tools
@@ -254,4 +255,4 @@ Keep it simple: one tool per registry entry, one doc per tool, test with `make i
 
 | Resource | Description |
 |----------|-------------|
-| [Dotfiles & Setup Inspiration](references/dotfiles-inspiration.md) | External dotfiles repos, Brewfiles, VS Code configs |
+| [Dotfiles & Setup Inspiration](src/references/dotfiles-inspiration.md) | External dotfiles repos, Brewfiles, VS Code configs |
