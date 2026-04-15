@@ -21,9 +21,7 @@ EXT_ENTRIES=(
   "import-cost|Import Cost|wix.vscode-import-cost|Show package size inline|productivity"
   "npm-intellisense|npm IntelliSense|christian-kohler.npm-intellisense|Autocomplete npm modules|intellisense"
   "path-intellisense|Path IntelliSense|christian-kohler.path-intellisense|Autocomplete file paths|intellisense"
-  "js-snippets|JS Snippets|xabikos.javascriptsnippets|ES6/ES7 snippets|snippets"
-  "simple-react-snippets|Simple React Snippets|burkeholland.simple-react-snippets|React snippets|snippets"
-  "es7-react-snippets|ES7+ React Snippets|dsznajder.es7-react-js-snippets|React/Redux snippets|snippets"
+  "es7-react-snippets|ES7+ React Snippets|dsznajder.es7-react-js-snippets|React/Redux/JS snippets|snippets"
   "jest-runner|Jest Runner|firsttris.vscode-jest-runner|Run Jest tests|testing"
   "vscode-jest|Jest|orta.vscode-jest|Auto-run Jest inline|testing"
   "playwright|Playwright|ms-playwright.playwright|Playwright runner|testing"
@@ -37,7 +35,6 @@ EXT_ENTRIES=(
   "project-manager|Project Manager|alefragnani.project-manager|Switch between projects easily|productivity"
   "tailwind-css|Tailwind CSS|bradlc.vscode-tailwindcss|Tailwind autocomplete|intellisense"
   "thunder-client|Thunder Client|rangav.vscode-thunder-client|REST API client|tools"
-  "todo-highlight|Todo Highlight|wayou.vscode-todo-highlight|Highlight TODO/FIXME|productivity"
   "todo-tree|Todo Tree|Gruntfuggly.todo-tree|Tree view of TODO/FIXME across project|productivity"
   "turbo-console-log|Turbo Console Log|ChakrounAnas.turbo-console-log|Insert console.log with shortcuts|productivity"
   "vim|Vim|vscodevim.vim|Vim keybindings|vim"
@@ -48,11 +45,11 @@ EXT_ENTRIES=(
   "remote-explorer|Remote Explorer|ms-vscode.remote-explorer|Browse remotes|remote"
   "yaml|YAML|redhat.vscode-yaml|YAML support|languages"
   "mdx|MDX|unifiedjs.vscode-mdx|MDX support|languages"
+  "tldraw|tldraw|tldraw-org.tldraw-vscode|Whiteboard and diagramming tool|tools"
   "github-theme|GitHub Theme|GitHub.github-vscode-theme|Official GitHub color themes|themes"
-  "glyph-icons|Glyph Icons|lewxdev.vscode-glyph|Monochrome file icons|themes"
+  "one-dark-pro|One Dark Pro|zhuangtongfa.material-theme|Atom-inspired dark theme|themes"
   "material-product-icons|Material Product Icons|PKief.material-product-icons|Material UI icons|themes"
   "material-icon-theme|Material Icon Theme|pkief.material-icon-theme|Material file icons|themes"
-  "vscode-icons|vscode-icons|vscode-icons-team.vscode-icons|Rich file/folder icons|themes"
 )
 
 # Get unique category names

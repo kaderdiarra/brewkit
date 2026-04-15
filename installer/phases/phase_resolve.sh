@@ -84,7 +84,7 @@ run_phase_resolve() {
   echo -e "  ${BOLD}Plan summary:${RESET}"
   echo -e "    ${GREEN}New installs:${RESET}    $total_new"
   echo -e "    ${GRAY}Already installed:${RESET} $total_installed"
-  [[ $system_count -gt 0 ]] && echo -e "    ${CYAN}System settings:${RESET}  $system_count"
+  [[ $system_count -gt 0 ]] && echo -e "    ${WHITE}System settings:${RESET}  $system_count"
   [[ $config_count -gt 0 ]] && echo -e "    ${BLUE}Configurations:${RESET}   $config_count"
   echo ""
 

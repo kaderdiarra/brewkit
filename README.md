@@ -1,14 +1,55 @@
-# macOS Setup Config
+# Brewkit
 
-Personal MacBook configuration reference — tools, apps, and dev environment setup with an interactive CLI installer.
+Opinionated macOS dev environment setup with an interactive CLI wizard. Pick a bundle or customize — apps, dev tools, editor extensions, shell config, and system preferences, all automated.
+
+<!-- TODO: Add a GIF/screenshot of the installer in action -->
+<!-- ![Installer demo](assets/demo.gif) -->
 
 ## Quick Start
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/macos-setup-config.git
-cd macos-setup-config
+git clone https://github.com/kaderdiarra/brewkit.git
+cd brewkit
 make install
 ```
+
+> **Dry run first?** Run `make install-dry` to preview every command without making changes.
+
+## Requirements
+
+- macOS 12+ (Monterey or later)
+- Admin access (for Homebrew and system preferences)
+- That's it — the installer handles Xcode CLI tools, Homebrew, and all dependencies
+
+## How It Works
+
+The installer is a 6-phase wizard that guides you through everything:
+
+1. **Prerequisites** — installs Xcode CLI tools, Homebrew, and gum (interactive UI)
+2. **Selection** — pick a bundle or custom-select individual items
+3. **Resolution** — detects what's already installed, builds an install plan
+4. **Confirmation** — shows a summary and asks before touching anything
+5. **Installation** — installs everything with progress tracking
+6. **Configuration** — sets up Git, SSH keys, shell aliases, system preferences
+
+### Bundles
+
+| Bundle | What's included |
+|--------|----------------|
+| **Minimal** | Core tools — terminal, launcher, git, font |
+| **Web Dev** | Full-stack web dev essentials — Node.js, extensions, linting |
+| **Full** | Everything in the config |
+| **Custom** | Pick and choose what you want |
+
+### Features
+
+- **Idempotent** — safe to re-run, skips what's already installed
+- **Graceful fallback** — works without gum (basic terminal prompts)
+- **Dry run** — preview all commands before executing
+- **Verbose mode** — see full brew output with `--verbose`
+- **Signal handling** — clean interruption with Ctrl+C
+- **Logging** — all output saved to `logs/`
+- **Exportable** — save your selections to replay later
 
 ## Commands
 
@@ -21,95 +62,50 @@ make logs              # Show the most recent install log
 make help              # Show all available commands
 ```
 
-## How It Works
+## What's Included
 
-The installer runs 6 phases:
-
-1. **Prerequisites** — installs Xcode CLI tools, Homebrew, and gum (interactive UI)
-2. **Selection** — pick a bundle (Minimal, Web Dev, Full) or custom-select items
-3. **Resolution** — checks what's already installed, builds an install plan
-4. **Confirmation** — shows summary and asks for confirmation
-5. **Installation** — installs everything with progress tracking
-6. **Configuration** — sets up Git, SSH, shell aliases, system preferences
-
-### Bundles
-
-| Bundle | What's included |
-|--------|----------------|
-| **Minimal** | Core tools (terminal, launcher, git) |
-| **Web Dev** | Full-stack web development essentials |
-| **Full** | Everything in the config |
-| **Custom** | Pick and choose what you want |
-
-### Features
-
-- Idempotent — safe to re-run, skips what's already installed
-- Graceful fallback — works without gum (basic terminal prompts)
-- Verbose mode — see full brew output with `--verbose`
-- Dry run — preview all commands before executing
-- Signal handling — clean interruption with Ctrl+C
-- Logging — all output saved to `logs/`
-
-## Structure
-
-```
-.
-├── apps/              # macOS applications
-├── dev-tools/         # Core development tools
-├── editor/            # Code editor setup & extensions
-│   └── extensions/
-├── system/            # macOS system configuration
-├── references/        # External resources & inspiration
-├── installer/         # Interactive CLI installer
-│   ├── lib/           # Shared utilities (colors, checks, UI, logging)
-│   ├── registry/      # Data-driven tool/app definitions
-│   ├── phases/        # Installation phases
-│   └── bundles.sh     # Predefined setup bundles
-└── install.sh         # Main entry point
-```
-
-## System
-
-| Config | Description |
-|--------|-------------|
-| [macOS Settings](system/macos-settings.md) | Display, dock, desktop, hot corners, login items, Finder |
-
-## Apps
+### Apps
 
 | App | Description |
 |-----|-------------|
 | [AltTab](apps/alttab.md) | Windows-style alt-tab with window previews |
-| [Arc](apps/arc.md) | Clean Chromium-based browser with sidebar tabs & workspaces |
-| [DBeaver](apps/dbeaver.md) | Universal database management tool — SQL editor, ER diagrams |
-| [Hidden Bar](apps/hidden-bar.md) | Free menu bar icon manager — hides top bar clutter |
-| [iTerm2](apps/iterm2.md) | Feature-rich terminal emulator — split panes, search, customization |
-| [itsycal](apps/itsycal.md) | Tiny menu bar calendar with events |
-| [Kap](apps/kap.md) | Open-source screen recorder — GIF, MP4, WebM |
-| [Keka](apps/keka.md) | File archiver — compress/extract 7z, ZIP, RAR, and more |
-| [NotchNook](apps/notchnook.md) | Turns MacBook notch into media controls, file tray & more |
-| [Raycast](apps/raycast.md) | Spotlight replacement — launch apps, manage windows, extensions |
-| [Rectangle](apps/rectangle.md) | Free window management with keyboard shortcuts |
-| [Stats](apps/stats.md) | Menu bar system monitor — CPU, RAM, network, battery, clock |
-| [Sublime Text](apps/sublime-text.md) | Fast, lightweight text editor for quick edits |
-| [Time Out](apps/time-out.md) | Break timer — micro breaks to prevent strain |
+| [Arc](apps/arc.md) | Chromium browser with sidebar tabs & workspaces |
+| [DBeaver](apps/dbeaver.md) | Universal database management tool |
+| [Hidden Bar](apps/hidden-bar.md) | Menu bar icon manager |
+| [iTerm2](apps/iterm2.md) | Terminal emulator — split panes, search, profiles |
+| [itsycal](apps/itsycal.md) | Menu bar calendar with events |
+| [Kap](apps/kap.md) | Screen recorder — GIF, MP4, WebM |
+| [Keka](apps/keka.md) | File archiver — 7z, ZIP, RAR |
+| [NotchNook](apps/notchnook.md) | MacBook notch utility area |
+| [Raycast](apps/raycast.md) | Spotlight replacement with extensions |
+| [Rectangle](apps/rectangle.md) | Window management with keyboard shortcuts |
+| [Stats](apps/stats.md) | Menu bar system monitor |
+| [Sublime Text](apps/sublime-text.md) | Lightweight text editor for quick edits |
+| [Time Out](apps/time-out.md) | Break timer to prevent strain |
 
-## Dev Tools
+### Dev Tools
 
 | Tool | Description |
 |------|-------------|
 | [CLI Tools](dev-tools/cli-tools.md) | wget, telnet, tldr |
+| [Fira Code](dev-tools/fira-code.md) | Developer font with programming ligatures |
 | [Git](dev-tools/git.md) | Version control + SSH key setup for GitHub |
-| [Homebrew](dev-tools/homebrew.md) | macOS package manager — install everything from the terminal |
-| [NVM](dev-tools/nvm.md) | Node.js version manager + useful global npm packages |
+| [Homebrew](dev-tools/homebrew.md) | macOS package manager |
+| [NVM](dev-tools/nvm.md) | Node.js version manager + global npm packages |
 | [Oh My Zsh](dev-tools/oh-my-zsh.md) | Zsh framework — themes, plugins, aliases |
 
-## Editor
+### System
 
-| Tool | Description |
-|------|-------------|
-| [VS Code](editor/vscode.md) | Code editor — setup, recommended settings |
+| Config | Description |
+|--------|-------------|
+| [macOS Settings](system/macos-settings.md) | Dock, Finder, hot corners, login items, display |
 
-### Extensions
+### Editor — VS Code
+
+[Setup & settings](editor/vscode.md) | [46 curated extensions](editor/extensions/)
+
+<details>
+<summary><strong>Extensions by category</strong> (click to expand)</summary>
 
 #### Essentials
 
@@ -138,7 +134,6 @@ The installer runs 6 phases:
 | [Paste JSON as Code](editor/extensions/paste-json-as-code.md) | Convert JSON to TypeScript types and more |
 | [Peacock](editor/extensions/peacock.md) | Color-code your workspaces |
 | [Project Manager](editor/extensions/project-manager.md) | Switch between projects quickly |
-| [Todo Highlight](editor/extensions/todo-highlight.md) | Highlight TODO/FIXME annotations |
 | [Todo Tree](editor/extensions/todo-tree.md) | Tree view of TODO/FIXME across project |
 | [Turbo Console Log](editor/extensions/turbo-console-log.md) | Insert console.log with shortcuts |
 
@@ -154,8 +149,7 @@ The installer runs 6 phases:
 
 | Extension | Description |
 |-----------|-------------|
-| [JavaScript Snippets](editor/extensions/js-snippets.md) | ES6/ES7 JS code snippets |
-| [React Snippets](editor/extensions/react-snippets.md) | Simple React + ES7+ React/Redux snippets |
+| [ES7+ React Snippets](editor/extensions/react-snippets.md) | React, Redux, and JavaScript snippets |
 
 #### Git
 
@@ -171,18 +165,19 @@ The installer runs 6 phases:
 |-----------|-------------|
 | [Testing (Jest + Playwright)](editor/extensions/testing.md) | Jest Runner, Jest, Playwright integration |
 
-#### Media
-
-| Extension | Description |
-|-----------|-------------|
-| [Paste Image & Image Preview](editor/extensions/paste-image-preview.md) | Paste & preview images in code comments |
-
 #### Tools
 
 | Extension | Description |
 |-----------|-------------|
 | [Docker](editor/extensions/docker.md) | Manage containers and images from VS Code |
-| [Thunder Client](editor/extensions/thunder-client.md) | Lightweight REST API client — Postman alternative |
+| [Thunder Client](editor/extensions/thunder-client.md) | Lightweight REST API client |
+| [tldraw](editor/extensions/tldraw.md) | Infinite canvas whiteboard and diagramming |
+
+#### Media
+
+| Extension | Description |
+|-----------|-------------|
+| [Paste Image & Image Preview](editor/extensions/paste-image-preview.md) | Paste & preview images in code comments |
 
 #### Remote Development
 
@@ -206,27 +201,57 @@ The installer runs 6 phases:
 
 | Extension | Description |
 |-----------|-------------|
-| [Themes & Icons](editor/extensions/theme-and-icons.md) | GitHub Theme, Glyph, Material icons, vscode-icons |
+| [Themes & Icons](editor/extensions/theme-and-icons.md) | GitHub Theme, One Dark Pro, Material icons |
+
+</details>
+
+## Project Structure
+
+```
+.
+├── apps/              # macOS applications (one doc per app)
+├── dev-tools/         # CLI tools, runtimes, fonts
+├── editor/            # VS Code setup & extensions
+│   └── extensions/    # One doc per extension (or grouped)
+├── system/            # macOS system preferences
+├── references/        # External dotfiles & inspiration
+├── installer/         # Interactive CLI installer
+│   ├── lib/           # Shared utilities (colors, checks, UI, logging)
+│   ├── registry/      # Data-driven tool/app definitions
+│   ├── phases/        # Installation phases
+│   └── bundles.sh     # Predefined setup bundles
+└── install.sh         # Entry point
+```
+
+## Adding New Tools
+
+Add one entry to the appropriate registry file:
+
+```bash
+# installer/registry/apps.sh
+"myapp|My App|--cask myapp|app|/Applications/My App.app|Description here"
+
+# installer/registry/dev-tools.sh
+"mytool|My Tool|brew:mytool|command|mytool|Description here"
+
+# installer/registry/editor.sh
+"myext|My Extension|publisher.extension-id|Description|category"
+```
+
+Then add the key to any bundles in `installer/bundles.sh` where it should be included.
+
+## Contributing
+
+Found a tool worth adding? Have a better config? Contributions are welcome.
+
+- **Add a tool/app/extension** — follow the [Adding New Tools](#adding-new-tools) guide above and open a PR
+- **Suggest improvements** — open an [issue](https://github.com/kaderdiarra/brewkit/issues) with your idea
+- **Fix a bug** — fork, fix, PR
+
+Keep it simple: one tool per registry entry, one doc per tool, test with `make install-dry` before submitting.
 
 ## References
 
 | Resource | Description |
 |----------|-------------|
-| [Dotfiles & Setup Inspiration](references/dotfiles-inspiration.md) | External dotfiles repos, Brewfiles, VS Code configs to reference |
-
-## Adding New Tools
-
-To add a new app/tool to the installer, add one entry to the appropriate registry file:
-
-```bash
-# installer/registry/apps.sh — add an app
-"myapp|My App|--cask myapp|app|/Applications/My App.app|Description here"
-
-# installer/registry/dev-tools.sh — add a dev tool
-"mytool|My Tool|brew:mytool|command|mytool|Description here"
-
-# installer/registry/editor.sh — add a VS Code extension
-"myext|My Extension|publisher.extension-id|Description|category"
-```
-
-Then add the key to any bundles in `installer/bundles.sh` where it should be included.
+| [Dotfiles & Setup Inspiration](references/dotfiles-inspiration.md) | External dotfiles repos, Brewfiles, VS Code configs |

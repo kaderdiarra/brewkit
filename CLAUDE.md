@@ -52,7 +52,7 @@ make help              # Show available commands
 - Uses `gum` for interactive UI with automatic fallback to basic terminal prompts
 - Phase-based execution: prerequisites → selection → dependency resolution → install → configure
 - Idempotent: checks current state before acting, safe to re-run
-- Shell modifications use marker comments (`# >>> macos-setup-config >>>`) to avoid duplication
+- Shell modifications use marker comments (`# >>> brewkit >>>`) to avoid duplication
 - System settings use structured fields (domain, key, type, value) — no `eval`
 - Signal handling (Ctrl+C) with clean shutdown and partial progress report
 - NVM version fetched dynamically from GitHub API with fallback default

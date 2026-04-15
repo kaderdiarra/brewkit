@@ -6,6 +6,7 @@ DEVTOOL_ENTRIES=(
   "wget|wget|brew:wget|command|wget|Download files from the web"
   "telnet|telnet|brew:telnet|command|telnet|Network debugging tool"
   "tldr|tldr|brew:tldr|command|tldr|Simplified man pages"
+  "fira-code|Fira Code|cask:font-fira-code|cask|font-fira-code|Developer font with ligatures"
   "nvm|NVM|custom:install_nvm|directory|$HOME/.nvm|Node.js version manager"
   "oh-my-zsh|Oh My Zsh|custom:install_oh_my_zsh|directory|$HOME/.oh-my-zsh|Zsh framework with themes and plugins"
 )

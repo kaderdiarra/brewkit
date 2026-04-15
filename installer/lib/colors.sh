@@ -14,15 +14,24 @@ BOLD='\033[1m'
 DIM='\033[2m'
 RESET='\033[0m'
 
+# 256-color constants
+AMBER='\033[38;5;214m'
+GOLD='\033[38;5;220m'
+ORANGE='\033[38;5;208m'
+SILVER='\033[38;5;250m'
+ASH='\033[38;5;245m'
+CHARCOAL='\033[38;5;240m'
+SNOW='\033[38;5;255m'
+
 # Symbols
 CHECK="${GREEN}✓${RESET}"
 CROSS="${RED}✗${RESET}"
-ARROW="${CYAN}→${RESET}"
+ARROW="${WHITE}→${RESET}"
 WARN="${YELLOW}⚠${RESET}"
 INFO="${BLUE}ℹ${RESET}"
 SKIP="${GRAY}○${RESET}"
 UP="${MAGENTA}↑${RESET}"
-GEAR="${CYAN}⚙${RESET}"
+GEAR="${WHITE}⚙${RESET}"
 
 print_success() { echo -e "  ${CHECK} $1"; }
 print_error()   { echo -e "  ${CROSS} $1"; }
@@ -34,8 +43,8 @@ print_upgrade() { echo -e "  ${UP} $1"; }
 
 print_header() {
   echo ""
-  echo -e "${BOLD}${CYAN}$1${RESET}"
-  echo -e "${CYAN}$(printf '%.0s─' $(seq 1 ${#1}))${RESET}"
+  echo -e "${BOLD}${WHITE}$1${RESET}"
+  echo -e "${ASH}$(printf '%.0s─' $(seq 1 ${#1}))${RESET}"
 }
 
 print_step() {
@@ -48,13 +57,14 @@ print_step() {
 }
 
 # ── Gradient bar helper ──
+_BAR_COLORS=(255 255 250 250 245 245 250 250 255 255 250 250 245 245 250 250 255 255 250 250 245 245 250 250 255 255 250 250 245 245)
+
 _print_gradient_bar() {
   local animated="${1:-false}"
   local delay="${2:-0.015}"
-  local bar_colors=("${CYAN}" "${CYAN}" "${BLUE}" "${BLUE}" "${MAGENTA}" "${MAGENTA}" "${BLUE}" "${BLUE}" "${CYAN}" "${CYAN}" "${BLUE}" "${BLUE}" "${MAGENTA}" "${MAGENTA}" "${BLUE}" "${BLUE}" "${CYAN}" "${CYAN}" "${BLUE}" "${BLUE}" "${MAGENTA}" "${MAGENTA}" "${BLUE}" "${BLUE}")
   echo -ne "  "
-  for c in "${bar_colors[@]}"; do
-    echo -ne "${c}██${RESET}"
+  for c in "${_BAR_COLORS[@]}"; do
+    echo -ne "\033[38;5;${c}m██${RESET}"
     if [[ "$animated" == "true" ]]; then
       sleep "$delay"
     fi
@@ -69,19 +79,27 @@ print_banner() {
   # Top gradient bar — animated
   _print_gradient_bar true 0.012
 
-  # Hexagon logo + title — draw line by line
+  # Logo — line by line with delay
   echo ""
   sleep 0.06
-  echo -e "  ${CYAN}    ⬡${RESET}"
+  echo -e "${WHITE}    ██████╗ ██████╗ ███████╗██╗    ██╗${RESET}${BOLD}${GOLD}██╗  ██╗██╗████████╗${RESET}"
   sleep 0.06
-  echo -e "  ${CYAN}   ⬡ ⬡${RESET}    ${BOLD}${WHITE}macOS Setup Config${RESET}"
+  echo -e "${WHITE}    ██╔══██╗██╔══██╗██╔════╝██║    ██║${RESET}${BOLD}${GOLD}██║ ██╔╝██║╚══██╔══╝${RESET}"
   sleep 0.06
-  echo -e "  ${BLUE}  ⬡   ⬡${RESET}   ${DIM}Your dev environment wizard${RESET}"
+  echo -e "${WHITE}    ██████╔╝██████╔╝█████╗  ██║ █╗ ██║${RESET}${AMBER}█████╔╝ ██║   ██║${RESET}"
   sleep 0.06
-  echo -e "  ${MAGENTA}   ⬡ ⬡${RESET}    ${DIM}── automated & interactive ──${RESET}"
+  echo -e "${SILVER}    ██╔══██╗██╔══██╗██╔══╝  ██║███╗██║${RESET}${ORANGE}██╔═██╗ ██║   ██║${RESET}"
   sleep 0.06
-  echo -e "  ${MAGENTA}    ⬡${RESET}"
+  echo -e "${ASH}    ██████╔╝██║  ██║███████╗╚███╔███╔╝${RESET}${ORANGE}██║  ██╗██║   ██║${RESET}"
+  sleep 0.06
+  echo -e "${CHARCOAL}    ╚═════╝ ╚═╝  ╚═╝╚══════╝ ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝   ╚═╝${RESET}"
   sleep 0.1
+
+  # Tagline — centered
+  echo ""
+  echo -e "      ${AMBER}🍺${RESET} ${DIM}Your macOS dev environment, brewed fresh.${RESET}"
+  sleep 0.06
+  echo -e "       ${DIM}── interactive · idempotent · opinionated ──${RESET}"
 
   # Bottom gradient bar — animated
   echo ""
@@ -94,11 +112,15 @@ print_banner_static() {
   echo ""
   _print_gradient_bar false
   echo ""
-  echo -e "  ${CYAN}    ⬡${RESET}"
-  echo -e "  ${CYAN}   ⬡ ⬡${RESET}    ${BOLD}${WHITE}macOS Setup Config${RESET}"
-  echo -e "  ${BLUE}  ⬡   ⬡${RESET}   ${DIM}Your dev environment wizard${RESET}"
-  echo -e "  ${MAGENTA}   ⬡ ⬡${RESET}    ${DIM}── automated & interactive ──${RESET}"
-  echo -e "  ${MAGENTA}    ⬡${RESET}"
+  echo -e "${WHITE}    ██████╗ ██████╗ ███████╗██╗    ██╗${RESET}${BOLD}${GOLD}██╗  ██╗██╗████████╗${RESET}"
+  echo -e "${WHITE}    ██╔══██╗██╔══██╗██╔════╝██║    ██║${RESET}${BOLD}${GOLD}██║ ██╔╝██║╚══██╔══╝${RESET}"
+  echo -e "${WHITE}    ██████╔╝██████╔╝█████╗  ██║ █╗ ██║${RESET}${AMBER}█████╔╝ ██║   ██║${RESET}"
+  echo -e "${SILVER}    ██╔══██╗██╔══██╗██╔══╝  ██║███╗██║${RESET}${ORANGE}██╔═██╗ ██║   ██║${RESET}"
+  echo -e "${ASH}    ██████╔╝██║  ██║███████╗╚███╔███╔╝${RESET}${ORANGE}██║  ██╗██║   ██║${RESET}"
+  echo -e "${CHARCOAL}    ╚═════╝ ╚═╝  ╚═╝╚══════╝ ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝   ╚═╝${RESET}"
+  echo ""
+  echo -e "      ${AMBER}🍺${RESET} ${DIM}Your macOS dev environment, brewed fresh.${RESET}"
+  echo -e "       ${DIM}── interactive · idempotent · opinionated ──${RESET}"
   echo ""
   _print_gradient_bar false
   echo ""

@@ -116,6 +116,17 @@ install_devtool() {
         fi
       fi
       ;;
+    cask)
+      if [[ "$VERBOSE" == "true" ]]; then
+        echo ""
+        brew install --cask "$method_value" 2>&1 | tee -a "$LOG_FILE"
+        [[ ${PIPESTATUS[0]} -eq 0 ]] && success=true
+      else
+        if brew install --cask "$method_value" >>"$LOG_FILE" 2>&1; then
+          success=true
+        fi
+      fi
+      ;;
     custom)
       if [[ "$VERBOSE" == "true" ]]; then
         echo ""

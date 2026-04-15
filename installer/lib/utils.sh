@@ -11,7 +11,7 @@ get_macos_version() {
 
 backup_file() {
   local file="$1"
-  local backup_dir="$HOME/.config/macos-setup-config/backups"
+  local backup_dir="$HOME/.config/brewkit/backups"
   mkdir -p "$backup_dir"
   if [[ -f "$file" ]]; then
     local basename
@@ -25,8 +25,8 @@ backup_file() {
 add_to_file_between_markers() {
   local file="$1"
   local content="$2"
-  local marker_start="# >>> macos-setup-config >>>"
-  local marker_end="# <<< macos-setup-config <<<"
+  local marker_start="# >>> brewkit >>>"
+  local marker_end="# <<< brewkit <<<"
 
   if [[ ! -f "$file" ]]; then
     touch "$file"
@@ -55,7 +55,7 @@ count_items() {
 export_selections() {
   local file="$1"
   {
-    echo "# macOS Setup Config — saved selections"
+    echo "# Brewkit — saved selections"
     echo "# Generated: $(date)"
     echo "# Re-import with: make install-from FILE=path/to/this/file"
     echo ""

@@ -48,7 +48,7 @@ FLAVOR_TEXTS=(
 )
 
 # Counter files — initialized at source time so subshells inherit the path
-_FLAVOR_COUNTER_FILE=$(mktemp /tmp/macos-setup-flavor.XXXXXX)
+_FLAVOR_COUNTER_FILE=$(mktemp /tmp/brewkit-flavor.XXXXXX)
 echo "0" > "$_FLAVOR_COUNTER_FILE"
 
 get_flavor_text() {
@@ -97,8 +97,8 @@ DEV_TIPS=(
   "Tip: 'git stash' is your friend — stash changes without committing"
 )
 
-_TIP_COUNTER_FILE=$(mktemp /tmp/macos-setup-tip.XXXXXX)
-_TIP_TIME_FILE=$(mktemp /tmp/macos-setup-tiptime.XXXXXX)
+_TIP_COUNTER_FILE=$(mktemp /tmp/brewkit-tip.XXXXXX)
+_TIP_TIME_FILE=$(mktemp /tmp/brewkit-tiptime.XXXXXX)
 echo "0" > "$_TIP_COUNTER_FILE"
 date +%s > "$_TIP_TIME_FILE"
 
@@ -157,50 +157,21 @@ print_completion_banner() {
   local failed_count="${2:-0}"
 
   echo ""
+  _print_gradient_bar true 0.01
+  echo ""
 
   if [[ $failed_count -eq 0 ]]; then
-    # Success — green gradient bar
-    local bar_colors=("${GREEN}" "${GREEN}" "${CYAN}" "${GREEN}" "${GREEN}" "${CYAN}" "${GREEN}" "${GREEN}" "${CYAN}" "${GREEN}" "${GREEN}" "${CYAN}" "${GREEN}" "${GREEN}" "${CYAN}" "${GREEN}" "${GREEN}" "${CYAN}" "${GREEN}" "${GREEN}" "${CYAN}" "${GREEN}" "${GREEN}" "${CYAN}")
-    echo -ne "  "
-    for c in "${bar_colors[@]}"; do
-      echo -ne "${c}██${RESET}"
-      sleep 0.01
-    done
-    echo ""
-    echo ""
-    echo -e "        ${BOLD}${WHITE}✓  Setup Complete${RESET}"
+    echo -e "            ${BOLD}${WHITE}✓  Setup Complete${RESET}"
   else
-    # Partial — yellow gradient bar
-    local bar_colors=("${YELLOW}" "${YELLOW}" "${GREEN}" "${YELLOW}" "${YELLOW}" "${GREEN}" "${YELLOW}" "${YELLOW}" "${GREEN}" "${YELLOW}" "${YELLOW}" "${GREEN}" "${YELLOW}" "${YELLOW}" "${GREEN}" "${YELLOW}" "${YELLOW}" "${GREEN}" "${YELLOW}" "${YELLOW}" "${GREEN}" "${YELLOW}" "${YELLOW}" "${GREEN}")
-    echo -ne "  "
-    for c in "${bar_colors[@]}"; do
-      echo -ne "${c}██${RESET}"
-      sleep 0.01
-    done
-    echo ""
-    echo ""
-    echo -e "        ${BOLD}${WHITE}⚠  Setup Complete${RESET}"
+    echo -e "            ${BOLD}${WHITE}⚠  Setup Complete${RESET}"
   fi
 
   local msg
   msg=$(get_completion_message "$success_count" "$failed_count")
-  echo -e "        ${DIM}${msg}${RESET}"
+  echo -e "            ${DIM}${msg}${RESET}"
 
   echo ""
-  if [[ $failed_count -eq 0 ]]; then
-    echo -ne "  "
-    for c in "${bar_colors[@]}"; do
-      echo -ne "${c}██${RESET}"
-      sleep 0.01
-    done
-  else
-    echo -ne "  "
-    for c in "${bar_colors[@]}"; do
-      echo -ne "${c}██${RESET}"
-      sleep 0.01
-    done
-  fi
-  echo ""
+  _print_gradient_bar true 0.01
   echo ""
 }
 

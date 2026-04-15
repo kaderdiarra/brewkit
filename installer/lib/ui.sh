@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # UI functions — gum wrappers with automatic fallback to basic prompts
 
-GUM_ACCENT="#00BFFF"
-GUM_SELECTED="#00FF88"
+GUM_ACCENT="#FFFFFF"
+GUM_SELECTED="#F5C542"
 
 # ── Smart wrappers that auto-detect gum vs fallback ──
 
@@ -99,7 +99,7 @@ ui_style_box() {
 
 _fallback_confirm() {
   local prompt="$1"
-  echo -e -n "  ${CYAN}${prompt}${RESET} [Y/n] "
+  echo -e -n "  ${WHITE}${prompt}${RESET} [Y/n] "
   read -r answer
   [[ -z "$answer" || "$answer" =~ ^[Yy] ]]
 }
@@ -109,7 +109,7 @@ _fallback_choose() {
   shift
   local options=("$@")
   echo ""
-  echo -e "  ${CYAN}${header}${RESET}"
+  echo -e "  ${WHITE}${header}${RESET}"
   local i=1
   for opt in "${options[@]}"; do
     echo -e "    ${WHITE}${i})${RESET} ${opt}"
@@ -129,7 +129,7 @@ _fallback_choose_multi() {
   shift
   local options=("$@")
   echo ""
-  echo -e "  ${CYAN}${header}${RESET}"
+  echo -e "  ${WHITE}${header}${RESET}"
   echo -e "  ${DIM}Enter numbers separated by spaces (e.g., 1 3 5), or 'a' for all${RESET}"
   local i=1
   for opt in "${options[@]}"; do
@@ -155,7 +155,7 @@ _fallback_input() {
   local placeholder="$1"
   local header="${2:-}"
   if [[ -n "$header" ]]; then
-    echo -e -n "  ${CYAN}${header}${RESET} [${DIM}${placeholder}${RESET}]: "
+    echo -e -n "  ${WHITE}${header}${RESET} [${DIM}${placeholder}${RESET}]: "
   else
     echo -e -n "  Input [${DIM}${placeholder}${RESET}]: "
   fi

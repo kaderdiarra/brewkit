@@ -17,12 +17,12 @@ BUNDLE_APPS_full="ALL"
 
 # Dev tool keys per bundle
 BUNDLE_DEVTOOLS_minimal="git"
-BUNDLE_DEVTOOLS_web_dev="git nvm oh-my-zsh wget tldr"
+BUNDLE_DEVTOOLS_web_dev="git nvm oh-my-zsh wget tldr fira-code"
 BUNDLE_DEVTOOLS_full="ALL"
 
 # Extension keys per bundle
 BUNDLE_EXTS_minimal="eslint prettier auto-rename-tag code-spell-checker error-lens"
-BUNDLE_EXTS_web_dev="eslint prettier auto-rename-tag auto-close-tag code-spell-checker error-lens gitlens github-copilot github-pr tailwind-css npm-intellisense path-intellisense simple-react-snippets es7-react-snippets thunder-client todo-highlight todo-tree pretty-ts-errors dotenv turbo-console-log peacock project-manager vim"
+BUNDLE_EXTS_web_dev="eslint prettier auto-rename-tag auto-close-tag code-spell-checker error-lens gitlens github-copilot github-pr tailwind-css npm-intellisense path-intellisense es7-react-snippets thunder-client todo-tree pretty-ts-errors dotenv turbo-console-log peacock project-manager vim"
 BUNDLE_EXTS_full="ALL"
 
 get_bundle_apps() {

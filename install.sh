@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -eo pipefail
 
-# ── macOS Setup Config Installer ──
+# ── Brewkit Installer ──
 # Interactive CLI installer for your dev environment
 # Usage: make install  (or  bash install.sh [--dry-run] [--verbose])
 
@@ -88,7 +88,13 @@ show_dry_run_preview() {
         devtool)
           name=$(get_field "$entry" 2)
           install_method=$(get_field "$entry" 3)
-          echo -e "    ${DIM}${install_method}${RESET}  ${GRAY}# ${name}${RESET}"
+          local method_type="${install_method%%:*}"
+          local method_value="${install_method#*:}"
+          case "$method_type" in
+            brew) echo -e "    ${DIM}brew install ${method_value}${RESET}  ${GRAY}# ${name}${RESET}" ;;
+            cask) echo -e "    ${DIM}brew install --cask ${method_value}${RESET}  ${GRAY}# ${name}${RESET}" ;;
+            *)    echo -e "    ${DIM}${install_method}${RESET}  ${GRAY}# ${name}${RESET}" ;;
+          esac
           ;;
         vscode)
           echo -e "    ${DIM}brew install --cask visual-studio-code${RESET}  ${GRAY}# VS Code${RESET}"

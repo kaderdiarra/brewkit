@@ -62,7 +62,7 @@ show_bundle_summary() {
         app_names="$app_names, $n"
       fi
     done
-    echo -e "    ${CYAN}Apps:${RESET} ${app_names}"
+    echo -e "    ${WHITE}Apps:${RESET} ${app_names}"
   fi
   if [[ ${#SELECTED_DEVTOOLS[@]} -gt 0 ]]; then
     local tool_names=""
@@ -75,16 +75,16 @@ show_bundle_summary() {
         tool_names="$tool_names, $n"
       fi
     done
-    echo -e "    ${CYAN}Dev Tools:${RESET} ${tool_names}"
+    echo -e "    ${WHITE}Dev Tools:${RESET} ${tool_names}"
   fi
   if [[ ${#SELECTED_EXTENSIONS[@]} -gt 0 ]]; then
-    echo -e "    ${CYAN}Extensions:${RESET} ${#SELECTED_EXTENSIONS[@]} VS Code extensions"
+    echo -e "    ${WHITE}Extensions:${RESET} ${#SELECTED_EXTENSIONS[@]} VS Code extensions"
   fi
   if [[ ${#SELECTED_SYSTEM[@]} -gt 0 ]]; then
-    echo -e "    ${CYAN}System:${RESET} ${#SELECTED_SYSTEM[@]} macOS settings"
+    echo -e "    ${WHITE}System:${RESET} ${#SELECTED_SYSTEM[@]} macOS settings"
   fi
   if [[ "$INSTALL_NODE" == "true" ]]; then
-    echo -e "    ${CYAN}Node.js:${RESET} LTS via NVM + npm globals"
+    echo -e "    ${WHITE}Node.js:${RESET} LTS via NVM + npm globals"
   fi
   echo ""
 

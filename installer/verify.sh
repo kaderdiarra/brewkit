@@ -10,8 +10,8 @@ source "${INSTALLER_ROOT}/installer/registry/dev-tools.sh"
 source "${INSTALLER_ROOT}/installer/registry/editor.sh"
 
 echo ""
-echo -e "${BOLD}${CYAN}macOS Setup Config — Status Check${RESET}"
-echo -e "${CYAN}──────────────────────────────────${RESET}"
+echo -e "${BOLD}${WHITE}Brewkit — Status Check${RESET}"
+echo -e "${WHITE}──────────────────────────────────${RESET}"
 
 # Apps
 echo ""
@@ -70,7 +70,7 @@ fi
 
 # Summary
 echo ""
-echo -e "${CYAN}──────────────────────────────────${RESET}"
+echo -e "${WHITE}──────────────────────────────────${RESET}"
 echo -e "  ${GREEN}Installed:${RESET} ${installed}"
 echo -e "  ${RED}Missing:${RESET}   ${missing}"
 echo ""
