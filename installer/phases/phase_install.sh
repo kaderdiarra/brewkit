@@ -59,11 +59,9 @@ install_app() {
   local entry="$1"
   local current="$2"
   local total="$3"
-  local name brew_args check_type check_value
+  local name brew_args
   name=$(get_field "$entry" 2)
   brew_args=$(get_field "$entry" 3)
-  check_type=$(get_field "$entry" 4)
-  check_value=$(get_field "$entry" 5)
 
   local flavor
   flavor=$(get_flavor_text)
@@ -71,9 +69,11 @@ install_app() {
 
   if [[ "$VERBOSE" == "true" ]]; then
     echo ""
+    # shellcheck disable=SC2086 — intentional word splitting for brew flags
     brew install $brew_args 2>&1 | tee -a "$LOG_FILE"
     local brew_exit=${PIPESTATUS[0]}
   else
+    # shellcheck disable=SC2086
     brew install $brew_args >>"$LOG_FILE" 2>&1
     local brew_exit=$?
   fi

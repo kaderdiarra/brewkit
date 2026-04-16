@@ -1,4 +1,4 @@
-.PHONY: install install-dry install-verbose verify logs help
+.PHONY: install install-dry install-verbose verify update logs help
 
 install: ## Run the interactive installer
 	@bash install.sh
@@ -11,6 +11,9 @@ install-verbose: ## Run installer with full command output
 
 verify: ## Check current install status of all tools and apps
 	@bash installer/verify.sh
+
+update: ## Pull latest config and re-run installer
+	@bash installer/update.sh
 
 logs: ## Show the most recent install log
 	@ls -t logs/install-*.log 2>/dev/null | head -1 | xargs cat 2>/dev/null || echo "No install logs found. Run 'make install' first."

@@ -56,7 +56,7 @@ has_brew_upgrade() {
 
 # Get install status label for display
 get_status_label() {
-  local key="$1"
+  local _key="$1"  # reserved for future use
   local check_type="$2"
   local check_value="$3"
 
