@@ -13,6 +13,12 @@ echo ""
 echo -e "${BOLD}${WHITE}Brewkit — Status Check${RESET}"
 echo -e "${WHITE}──────────────────────────────────${RESET}"
 
+# Pre-cache install status
+echo -ne "  ${ARROW} Loading install status..."
+cache_brew_lists
+cache_vscode_extensions
+echo -e "\r\033[K  ${CHECK} Install status loaded"
+
 # Apps
 echo ""
 echo -e "${BOLD}Apps${RESET}"

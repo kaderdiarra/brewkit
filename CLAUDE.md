@@ -22,6 +22,7 @@ installer/         → Interactive CLI installer
   lib/             → Shared utilities (colors, checks, UI wrappers, logging)
   registry/        → Data-driven tool/app definitions (the source of truth)
   phases/          → Installation phases (prerequisites → select → resolve → install → configure)
+  config/          → Default configuration files (VS Code settings)
   bundles.sh       → Predefined setup bundles (minimal, web-dev, full)
   verify.sh        → Standalone status checker for all registered tools
   info.sh          → Tool info browser (make info / make info t=<tool>)

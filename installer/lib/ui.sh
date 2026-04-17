@@ -35,6 +35,16 @@ ui_choose_multi() {
   fi
 }
 
+ui_choose_multi_preview() {
+  local header="$1"
+  shift
+  if is_fzf_installed; then
+    _fzf_choose_multi_preview "$header" "$@"
+  else
+    ui_choose_multi "$header" "$@"
+  fi
+}
+
 ui_confirm() {
   local prompt="$1"
   if [[ "$USE_FALLBACK" == "true" ]]; then
@@ -161,4 +171,41 @@ _fallback_input() {
   fi
   read -r value
   echo "$value"
+}
+
+# ── fzf functions (multi-select with inline preview) ──
+
+# shellcheck disable=SC2016
+_fzf_choose_multi_preview() {
+  local header="$1"
+  shift
+  printf '%s\n' "$@" | fzf \
+    --multi \
+    --ansi \
+    --reverse \
+    --no-sort \
+    --cycle \
+    --highlight-line \
+    --border=rounded \
+    --border-label=" ${header} " \
+    --border-label-pos=2 \
+    --header='  tab=toggle  ctrl-a=all  ctrl-d=none  ?=preview  enter=confirm' \
+    --header-first \
+    --no-separator \
+    --info=inline \
+    --pointer='▌' \
+    --marker='┃' \
+    --preview="bash '${INSTALLER_ROOT}/installer/lib/preview.sh' {}" \
+    --preview-window='right,45%,border-left,wrap,hidden,<80(down,40%,border-top,wrap,hidden)' \
+    --preview-label=' Details ' \
+    --bind='tab:toggle+down' \
+    --bind='shift-tab:toggle+up' \
+    --bind='ctrl-a:select-all' \
+    --bind='ctrl-d:deselect-all' \
+    --bind='ctrl-t:toggle-all' \
+    --bind='?:toggle-preview' \
+    --bind='start:change-footer: tab to select, enter to confirm' \
+    --bind='multi:transform-footer:echo " $FZF_SELECT_COUNT item(s) selected"' \
+    --footer-border=line \
+    --color='header:dim,pointer:#f5c542,marker:#f5c542:bold,hl:#f5c542,hl+:#f5c542:bold,border:#666666,label:#ffffff:bold,preview-border:#444444'
 }

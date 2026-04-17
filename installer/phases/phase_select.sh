@@ -10,6 +10,9 @@ INSTALL_NODE=false
 INSTALL_NPM_GLOBALS=false
 CONFIGURE_GIT=false
 CONFIGURE_SSH=false
+CONFIGURE_VSCODE_SETTINGS=false
+CONFIGURE_DEFAULT_BROWSER=false
+DEFAULT_BROWSER=""
 
 run_phase_select() {
   print_step "2" "6" "Choose your setup"
@@ -234,6 +237,10 @@ select_custom() {
 }
 
 select_apps() {
+  echo -ne "  ${ARROW} Loading app status..."
+  cache_brew_lists
+  echo -e "\r\033[K  ${CHECK} App status loaded"
+
   local options=()
   for entry in "${APP_ENTRIES[@]}"; do
     local name check_type check_value desc
@@ -249,7 +256,7 @@ select_apps() {
   done
 
   local selected
-  selected=$(ui_choose_multi "Select apps to install (tip: 'make info <app>' for details):" "${options[@]}")
+  selected=$(ui_choose_multi_preview "Select apps to install (tip: 'make info <app>' for details):" "${options[@]}")
 
   SELECTED_APPS=()
   while IFS= read -r line; do
@@ -265,9 +272,15 @@ select_apps() {
       fi
     done
   done <<< "$selected"
+
+  print_success "${#SELECTED_APPS[@]} app(s) selected"
 }
 
 select_devtools() {
+  echo -ne "  ${ARROW} Loading tool status..."
+  cache_brew_lists
+  echo -e "\r\033[K  ${CHECK} Tool status loaded"
+
   local options=()
   for entry in "${DEVTOOL_ENTRIES[@]}"; do
     local name check_type check_value desc
@@ -283,7 +296,7 @@ select_devtools() {
   done
 
   local selected
-  selected=$(ui_choose_multi "Select dev tools (tip: 'make info <tool>' for details):" "${options[@]}")
+  selected=$(ui_choose_multi_preview "Select dev tools (tip: 'make info <tool>' for details):" "${options[@]}")
 
   SELECTED_DEVTOOLS=()
   while IFS= read -r line; do
@@ -299,6 +312,8 @@ select_devtools() {
       fi
     done
   done <<< "$selected"
+
+  print_success "${#SELECTED_DEVTOOLS[@]} tool(s) selected"
 
   # Ask about Node if NVM selected
   for entry in "${SELECTED_DEVTOOLS[@]}"; do
@@ -317,6 +332,10 @@ select_devtools() {
 }
 
 select_extensions() {
+  echo -ne "  ${ARROW} Loading extension status..."
+  cache_vscode_extensions
+  echo -e "\r\033[K  ${CHECK} Extension status loaded"
+
   local options=()
   local current_cat=""
 
@@ -330,7 +349,7 @@ select_extensions() {
     if [[ "$cat" != "$current_cat" ]]; then
       local cat_label
       cat_label=$(echo "$cat" | awk '{print toupper(substr($0,1,1)) substr($0,2)}')
-      options+=("── ${cat_label} ──")
+      options+=("$(printf '\033[2m── %s ──\033[0m' "$cat_label")")
       current_cat="$cat"
     fi
 
@@ -342,12 +361,12 @@ select_extensions() {
   done
 
   local selected
-  selected=$(ui_choose_multi "Select VS Code extensions (tip: 'make info <ext>' for details):" "${options[@]}")
+  selected=$(ui_choose_multi_preview "Select VS Code extensions (tip: 'make info <ext>' for details):" "${options[@]}")
 
   SELECTED_EXTENSIONS=()
   while IFS= read -r line; do
     [[ -z "$line" ]] && continue
-    [[ "$line" == ──* ]] && continue
+    [[ "$line" == ──* || "$line" == *"──"* ]] && continue
     local ext_name
     ext_name=$(echo "$line" | sed 's/\[.\] *//' | sed 's/ *—.*//' | xargs)
     for entry in "${EXT_ENTRIES[@]}"; do
@@ -359,6 +378,8 @@ select_extensions() {
       fi
     done
   done <<< "$selected"
+
+  print_success "${#SELECTED_EXTENSIONS[@]} extension(s) selected"
 }
 
 select_system_settings() {
@@ -384,6 +405,8 @@ select_system_settings() {
       fi
     done
   done <<< "$selected"
+
+  print_success "${#SELECTED_SYSTEM[@]} setting(s) selected"
 }
 
 select_shell_config() {
@@ -434,5 +457,49 @@ select_configuration() {
     if ui_confirm "Generate SSH key for GitHub?"; then
       CONFIGURE_SSH=true
     fi
+  fi
+
+  # VS Code settings
+  if is_vscode_installed; then
+    local settings_file="$HOME/Library/Application Support/Code/User/settings.json"
+    if [[ -f "$settings_file" ]]; then
+      echo -e "  ${DIM}VS Code settings found at ~/Library/Application Support/Code/User/settings.json${RESET}"
+      if ui_confirm "Merge recommended VS Code settings (format on save, Prettier, ESLint, Tailwind, etc.)?"; then
+        CONFIGURE_VSCODE_SETTINGS=true
+      fi
+    else
+      if ui_confirm "Apply recommended VS Code settings (format on save, Prettier, ESLint, Tailwind, etc.)?"; then
+        CONFIGURE_VSCODE_SETTINGS=true
+      fi
+    fi
+  fi
+
+  # Default browser
+  if ui_confirm "Set a default browser?"; then
+    select_default_browser
+  fi
+}
+
+select_default_browser() {
+  # Detect installed browsers
+  local browsers=()
+  [[ -d "/Applications/Arc.app" ]] && browsers+=("Arc")
+  [[ -d "/Applications/Google Chrome.app" ]] && browsers+=("Google Chrome")
+  [[ -d "/Applications/Firefox.app" ]] && browsers+=("Firefox")
+  [[ -d "/Applications/Brave Browser.app" ]] && browsers+=("Brave")
+  [[ -d "/Applications/Microsoft Edge.app" ]] && browsers+=("Microsoft Edge")
+  [[ -d "/Applications/Safari.app" ]] && browsers+=("Safari")
+
+  if [[ ${#browsers[@]} -eq 0 ]]; then
+    print_warn "No supported browsers detected"
+    return
+  fi
+
+  local selected
+  selected=$(ui_choose "Select your default browser:" "${browsers[@]}")
+
+  if [[ -n "$selected" ]]; then
+    CONFIGURE_DEFAULT_BROWSER=true
+    DEFAULT_BROWSER="$selected"
   fi
 }

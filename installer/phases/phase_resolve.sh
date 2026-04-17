@@ -8,6 +8,15 @@ run_phase_resolve() {
   print_step "4" "6" "Resolving dependencies"
   print_phase_intro 4
 
+  # Pre-cache install status for fast lookups
+  echo -ne "  ${ARROW} Checking installed software..."
+  cache_brew_lists
+  if [[ ${#SELECTED_EXTENSIONS[@]} -gt 0 ]]; then
+    cache_vscode_extensions
+  fi
+  echo -e "\r\033[K  ${CHECK} Install status loaded"
+  echo ""
+
   local total_new=0
   local total_installed=0
 

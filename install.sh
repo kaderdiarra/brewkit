@@ -133,6 +133,12 @@ show_dry_run_preview() {
   if [[ ${#SELECTED_SHELL_OPTIONS[@]} -gt 0 ]]; then
     echo -e "    ${DIM}~/.zshrc modifications${RESET}  ${GRAY}# Shell aliases: ${SELECTED_SHELL_OPTIONS[*]}${RESET}"
   fi
+  if [[ "$CONFIGURE_VSCODE_SETTINGS" == "true" ]]; then
+    echo -e "    ${DIM}~/Library/.../Code/User/settings.json${RESET}  ${GRAY}# VS Code recommended settings${RESET}"
+  fi
+  if [[ "$CONFIGURE_DEFAULT_BROWSER" == "true" ]]; then
+    echo -e "    ${DIM}defaultbrowser ${DEFAULT_BROWSER}${RESET}  ${GRAY}# Set default browser${RESET}"
+  fi
 
   echo ""
   local elapsed

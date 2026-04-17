@@ -63,5 +63,18 @@ run_phase_prerequisites() {
     fi
   fi
 
+  # fzf (fuzzy finder with inline preview)
+  if is_fzf_installed; then
+    print_success "fzf (inline tool preview)"
+  else
+    print_arrow "Installing fzf (for inline tool preview)..."
+    brew install fzf 2>/dev/null
+    if is_fzf_installed; then
+      print_success "fzf installed"
+    else
+      print_warn "fzf unavailable — preview disabled, using standard selection"
+    fi
+  fi
+
   log "Prerequisites complete (fallback=${USE_FALLBACK})"
 }

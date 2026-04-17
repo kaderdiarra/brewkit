@@ -195,6 +195,13 @@ show_tool_detail() {
 browse_all() {
   print_banner_static
 
+  # Pre-cache install status
+  echo -ne "  ${ARROW} Loading install status..."
+  cache_brew_lists
+  cache_vscode_extensions
+  echo -e "\r\033[K  ${CHECK} Install status loaded"
+  echo ""
+
   # Apps
   echo -e "  ${BOLD}${WHITE}Apps${RESET}  ${DIM}(${#APP_ENTRIES[@]} available)${RESET}"
   echo -e "  ${ASH}$(printf '%.0s─' $(seq 1 40))${RESET}"
