@@ -9,6 +9,7 @@ DEVTOOL_ENTRIES=(
   "fira-code|Fira Code|cask:font-fira-code|cask|font-fira-code|Developer font with ligatures|https://github.com/tonsky/FiraCode"
   "nvm|NVM|custom:install_nvm|directory|$HOME/.nvm|Node.js version manager|https://github.com/nvm-sh/nvm"
   "oh-my-zsh|Oh My Zsh|custom:install_oh_my_zsh|directory|$HOME/.oh-my-zsh|Zsh framework with themes and plugins|https://ohmyz.sh"
+  "claude-code|Claude Code|custom:install_claude_code|command|claude|AI coding agent for the terminal|https://claude.com/product/claude-code"
 )
 
 # NVM version — override with NVM_INSTALL_VERSION env var
@@ -35,6 +36,10 @@ install_oh_my_zsh() {
   if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
   fi
+}
+
+install_claude_code() {
+  curl -fsSL https://claude.ai/install.sh | bash
 }
 
 install_node_lts() {

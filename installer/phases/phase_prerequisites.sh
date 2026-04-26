@@ -3,7 +3,7 @@
 # Note: uses _fallback_confirm directly since gum isn't available yet
 
 run_phase_prerequisites() {
-  print_step "1" "6" "Prerequisites"
+  print_step "1" "5" "Prerequisites"
   print_phase_intro 1
 
   # Xcode CLI tools

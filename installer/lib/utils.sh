@@ -25,8 +25,9 @@ backup_file() {
 add_to_file_between_markers() {
   local file="$1"
   local content="$2"
-  local marker_start="# >>> brewkit >>>"
-  local marker_end="# <<< brewkit <<<"
+  local tag="${3:-brewkit}"
+  local marker_start="# >>> ${tag} >>>"
+  local marker_end="# <<< ${tag} <<<"
 
   if [[ ! -f "$file" ]]; then
     touch "$file"
@@ -57,7 +58,7 @@ export_selections() {
   {
     echo "# Brewkit — saved selections"
     echo "# Generated: $(date)"
-    echo "# Re-import with: make install-from FILE=path/to/this/file"
+    echo "# To replay: source this file, then run make install"
     echo ""
     echo "BUNDLE=custom"
     echo ""

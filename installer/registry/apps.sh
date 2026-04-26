@@ -7,7 +7,7 @@ APP_ENTRIES=(
   "dbeaver|DBeaver|--cask dbeaver-community|app|/Applications/DBeaver.app|Universal database management tool|https://dbeaver.io"
   "hidden-bar|Hidden Bar|--cask hiddenbar|app|/Applications/Hidden Bar.app|Free menu bar icon manager|https://github.com/dwarvesf/hidden"
   "iterm2|iTerm2|--cask iterm2|app|/Applications/iTerm.app|Feature-rich terminal emulator|https://iterm2.com"
-  "itsycal|itsycal|--cask itsycal|app|/Applications/Itsycal.app|Tiny menu bar calendar|https://www.mowglii.com/itsycal"
+  "itsycal|Itsycal|--cask itsycal|app|/Applications/Itsycal.app|Tiny menu bar calendar|https://www.mowglii.com/itsycal"
   "kap|Kap|--cask kap|app|/Applications/Kap.app|Open-source screen recorder|https://getkap.co"
   "keka|Keka|--cask keka|app|/Applications/Keka.app|File archiver (7z, ZIP, RAR)|https://www.keka.io"
   "notchnook|NotchNook|--cask notchnook|app|/Applications/NotchNook.app|MacBook notch utility area|https://lo.cafe/notchnook"
@@ -16,10 +16,12 @@ APP_ENTRIES=(
   "stats|Stats|--cask stats|app|/Applications/Stats.app|Menu bar system monitor|https://github.com/exelban/stats"
   "sublime-text|Sublime Text|--cask sublime-text|app|/Applications/Sublime Text.app|Fast lightweight text editor|https://www.sublimetext.com"
   "time-out|Time Out|--cask time-out|app|/Applications/Time Out.app|Break timer for strain prevention|https://www.dejal.com/timeout"
+  "aerospace|AeroSpace|--cask nikitabobko/tap/aerospace|app|/Applications/AeroSpace.app|i3-like tiling window manager (power-user alternative to Rectangle)|https://github.com/nikitabobko/AeroSpace"
+  "linear|Linear|--cask linear|app|/Applications/Linear.app|Issue tracking and project management|https://linear.app"
 )
 
-# Field accessors — usage: get_app_field "entry_string" field_index
-# Fields: 0=key 1=name 2=brew_args 3=check_type 4=check_value 5=description
+# Field accessors — usage: get_field "entry_string" field_number (1-based)
+# Fields: 1=key 2=name 3=brew_args 4=check_type 5=check_value 6=description 7=url
 get_field() {
   echo "$1" | cut -d'|' -f"$2"
 }

@@ -212,11 +212,7 @@ browse_all() {
     url=$(get_field "$entry" 7)
     local status_icon
     status_icon=$(get_status_icon "$entry" "app")
-    if [[ -n "$url" ]]; then
-      printf "  ${status_icon}  %-16s ${DIM}%s${RESET}\n" "$name" "$desc"
-    else
-      printf "  ${status_icon}  %-16s ${DIM}%s${RESET}\n" "$name" "$desc"
-    fi
+    printf "  ${status_icon}  %-16s ${DIM}%s${RESET}\n" "$name" "$desc"
   done
 
   echo ""
@@ -298,8 +294,9 @@ browse_interactive() {
     --placeholder="Type a tool name...")
 
   if [[ -n "$selected" ]]; then
+    # Extract full tool name (everything before the double-space separator)
     local tool_name
-    tool_name=$(echo "$selected" | awk '{print $1}')
+    tool_name=$(echo "$selected" | sed 's/  .*//' | xargs)
     show_tool_detail "$tool_name"
   fi
 }

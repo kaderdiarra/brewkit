@@ -123,7 +123,7 @@ _fallback_choose() {
   local i=1
   for opt in "${options[@]}"; do
     echo -e "    ${WHITE}${i})${RESET} ${opt}"
-    ((i++))
+    i=$((i + 1))
   done
   echo -n "  Enter number: "
   read -r choice
@@ -144,7 +144,7 @@ _fallback_choose_multi() {
   local i=1
   for opt in "${options[@]}"; do
     echo -e "    ${WHITE}${i})${RESET} ${opt}"
-    ((i++))
+    i=$((i + 1))
   done
   echo -n "  Selection: "
   read -r choices

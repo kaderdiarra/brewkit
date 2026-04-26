@@ -15,7 +15,7 @@ CONFIGURE_DEFAULT_BROWSER=false
 DEFAULT_BROWSER=""
 
 run_phase_select() {
-  print_step "2" "6" "Choose your setup"
+  print_step "2" "5" "Choose your setup"
   print_phase_intro 2
 
   # Bundle selection
@@ -23,7 +23,7 @@ run_phase_select() {
   local i=0
   for name in "${BUNDLE_NAMES[@]}"; do
     options+=("$(printf '%-12s — %s' "$name" "${BUNDLE_DESCS[$i]}")")
-    ((i++))
+    i=$((i + 1))
   done
 
   local bundle
@@ -199,7 +199,7 @@ select_bundle() {
 }
 
 select_custom() {
-  print_step "3" "6" "Custom selection"
+  echo -e "  ${BOLD}Custom selection${RESET}"
 
   local categories
   categories=$(ui_choose_multi "Select categories to configure:" \

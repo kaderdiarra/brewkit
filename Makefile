@@ -1,4 +1,4 @@
-.PHONY: install install-dry install-verbose verify update info browse logs help
+.PHONY: install install-dry install-verbose uninstall uninstall-dry verify update info browse logs help
 
 install: ## Run the interactive installer
 	@bash install.sh
@@ -8,6 +8,12 @@ install-dry: ## Preview what would be installed (no changes)
 
 install-verbose: ## Run installer with full command output
 	@bash install.sh --verbose
+
+uninstall: ## Interactively remove installed tools and apps
+	@bash installer/uninstall.sh
+
+uninstall-dry: ## Preview what would be removed (no changes)
+	@bash installer/uninstall.sh --dry-run
 
 verify: ## Check current install status of all tools and apps
 	@bash installer/verify.sh
@@ -33,4 +39,14 @@ help: ## Show available commands
 	@echo "  ──────────────────"
 	@echo ""
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-20s\033[0m %s\n", $$1, $$2}'
+	@echo ""
+	@echo "  Shell Commands (available after install)"
+	@echo "  ──────────────────"
+	@echo ""
+	@printf "  \033[36m%-20s\033[0m %s\n" "keys" "Show keyboard shortcuts for installed tools"
+	@printf "  \033[36m%-20s\033[0m %s\n" "keys <tool>" "Show shortcuts for a specific tool (e.g. keys vscode)"
+	@printf "  \033[36m%-20s\033[0m %s\n" "keys help" "Show keys usage and available tools"
+	@printf "  \033[36m%-20s\033[0m %s\n" "aliases" "Show all shell aliases"
+	@printf "  \033[36m%-20s\033[0m %s\n" "aliases <group>" "Show aliases for a group (e.g. aliases git)"
+	@printf "  \033[36m%-20s\033[0m %s\n" "aliases help" "Show aliases usage and available groups"
 	@echo ""

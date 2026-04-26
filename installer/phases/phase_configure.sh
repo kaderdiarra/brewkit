@@ -2,21 +2,24 @@
 # Phase 6: Post-install configuration
 
 run_phase_configure() {
-  print_step "6" "6" "Configuration"
-  print_phase_intro 6
+  print_step "5" "5" "Configuration"
+  print_phase_intro 5
 
   [[ "$CONFIGURE_GIT" == "true" ]] && configure_git
   [[ "$CONFIGURE_SSH" == "true" ]] && configure_ssh
   [[ ${#SELECTED_SHELL_OPTIONS[@]} -gt 0 ]] && configure_shell
 
-  # Oh My Zsh plugins
-  local has_omz=false
-  for entry in "${SELECTED_DEVTOOLS[@]}"; do
-    local key
-    key=$(get_field "$entry" 1)
-    [[ "$key" == "oh-my-zsh" ]] && has_omz=true
-  done
-  [[ "$has_omz" == "true" ]] && is_oh_my_zsh_installed && configure_omz_plugins
+  # Shortcuts cheatsheet — always installed regardless of shell alias selection
+  configure_keys
+
+  # Oh My Zsh plugins — configure if OMZ is installed (whether selected this run or already present)
+  if is_oh_my_zsh_installed; then
+    local wants_omz_plugins=false
+    for opt in "${SELECTED_SHELL_OPTIONS[@]}"; do
+      [[ "$opt" == "oh" ]] && wants_omz_plugins=true
+    done
+    [[ "$wants_omz_plugins" == "true" ]] && configure_omz_plugins
+  fi
 
   [[ ${#SELECTED_SYSTEM[@]} -gt 0 ]] && configure_system
   [[ "$CONFIGURE_VSCODE_SETTINGS" == "true" ]] && configure_vscode_settings
@@ -48,6 +51,8 @@ configure_git() {
     print_success "user.name = $git_name"
   elif [[ -n "$existing_name" ]]; then
     print_skip "user.name kept: $existing_name"
+  else
+    print_warn "user.name not set — run 'git config --global user.name \"Your Name\"' later"
   fi
 
   local git_email
@@ -57,6 +62,8 @@ configure_git() {
     print_success "user.email = $git_email"
   elif [[ -n "$existing_email" ]]; then
     print_skip "user.email kept: $existing_email"
+  else
+    print_warn "user.email not set — run 'git config --global user.email \"you@example.com\"' later"
   fi
 
   # Default branch — show current and let user choose
@@ -155,11 +162,72 @@ configure_shell() {
   done
 
   if [[ -n "$alias_block" ]]; then
+    # Generate the cheatsheet function with selected groups
+    local alias_groups=()
+    for opt in "${SELECTED_SHELL_OPTIONS[@]}"; do
+      case "$opt" in
+        git|general|docker|pnpm) alias_groups+=("$opt") ;;
+      esac
+    done
+    if [[ ${#alias_groups[@]} -gt 0 ]]; then
+      alias_block+=$'\n'
+      alias_block+=$(generate_aliases_function "${alias_groups[@]}")
+    fi
+
     add_to_file_between_markers "$HOME/.zshrc" "$alias_block"
     print_success "Aliases written to ~/.zshrc"
+    print_success "Run 'aliases' to see your cheatsheet"
   fi
 
   log "Shell configured with: ${SELECTED_SHELL_OPTIONS[*]}"
+}
+
+configure_keys() {
+  print_header "Shortcuts Cheatsheet"
+
+  backup_file "$HOME/.zshrc"
+
+  # Build tool list based on what's selected or already installed
+  local shortcut_tools=()
+  shortcut_tools+=("vscode")
+  shortcut_tools+=("macos")
+
+  # Add tools based on what's selected this run
+  for entry in "${SELECTED_APPS[@]:-}"; do
+    local key
+    key=$(get_field "$entry" 1)
+    case "$key" in
+      raycast)   shortcut_tools+=("raycast") ;;
+      rectangle) shortcut_tools+=("rectangle") ;;
+      aerospace) shortcut_tools+=("aerospace") ;;
+      arc)       shortcut_tools+=("arc") ;;
+      iterm2)    shortcut_tools+=("iterm2") ;;
+    esac
+  done
+
+  # Check already-installed apps too
+  [[ -d "/Applications/Raycast.app" ]] && ! printf '%s\n' "${shortcut_tools[@]}" | grep -q '^raycast$' && shortcut_tools+=("raycast")
+  [[ -d "/Applications/Rectangle.app" ]] && ! printf '%s\n' "${shortcut_tools[@]}" | grep -q '^rectangle$' && shortcut_tools+=("rectangle")
+  [[ -d "/Applications/AeroSpace.app" ]] && ! printf '%s\n' "${shortcut_tools[@]}" | grep -q '^aerospace$' && shortcut_tools+=("aerospace")
+  [[ -d "/Applications/Arc.app" ]] && ! printf '%s\n' "${shortcut_tools[@]}" | grep -q '^arc$' && shortcut_tools+=("arc")
+  [[ -d "/Applications/iTerm.app" ]] && ! printf '%s\n' "${shortcut_tools[@]}" | grep -q '^iterm2$' && shortcut_tools+=("iterm2")
+
+  # Add vim if vim extension is selected
+  for entry in "${SELECTED_EXTENSIONS[@]:-}"; do
+    local key
+    key=$(get_field "$entry" 1)
+    [[ "$key" == "vim" ]] && shortcut_tools+=("vim")
+  done
+
+  local keys_block=""
+  keys_block+=$(generate_keys_function "${shortcut_tools[@]}")
+
+  add_to_file_between_markers "$HOME/.zshrc" "$keys_block" "brewkit-keys"
+
+  print_success "Shortcuts cheatsheet added (${#shortcut_tools[@]} tools)"
+  print_success "Run 'keys' or 'keys <tool>' (try 'keys list')"
+
+  log "Shortcuts configured for: ${shortcut_tools[*]}"
 }
 
 configure_omz_plugins() {
@@ -179,8 +247,9 @@ configure_omz_plugins() {
 
   # Merge with existing plugins to preserve user's custom ones
   if grep -q "^plugins=" "$HOME/.zshrc" 2>/dev/null; then
+    # Extract existing plugins — handles both single-line and multi-line formats
     local existing_plugins
-    existing_plugins=$(grep "^plugins=" "$HOME/.zshrc" | sed 's/plugins=(\(.*\))/\1/')
+    existing_plugins=$(sed -n '/^plugins=(/,/)/{ s/plugins=(//; s/)//; p; }' "$HOME/.zshrc" | tr '\n' ' ' | xargs)
 
     local merged="$new_plugins"
     for p in $existing_plugins; do
@@ -189,7 +258,13 @@ configure_omz_plugins() {
       fi
     done
 
-    sed -i '' "s/^plugins=(.*/plugins=(${merged})/" "$HOME/.zshrc"
+    # Remove entire plugins block (single or multi-line) and replace
+    backup_file "$HOME/.zshrc"
+    local tmp_zshrc
+    tmp_zshrc=$(mktemp)
+    sed '/^plugins=(/,/)/d' "$HOME/.zshrc" > "$tmp_zshrc"
+    echo "plugins=(${merged})" >> "$tmp_zshrc"
+    mv "$tmp_zshrc" "$HOME/.zshrc"
     new_plugins="$merged"
   fi
 
@@ -245,6 +320,12 @@ configure_vscode_settings() {
   mkdir -p "$settings_dir"
 
   if [[ -f "$settings_file" ]]; then
+    if ! command -v jq &>/dev/null; then
+      print_warn "jq is not installed — cannot merge settings"
+      print_info "Install jq (brew install jq) and re-run, or delete settings.json to use defaults"
+      log "SKIPPED: VS Code settings merge (jq not installed)"
+      return
+    fi
     # Deep merge: existing keys preserved, new keys added
     backup_file "$settings_file"
     if jq -s '.[0] * .[1]' "$settings_file" "$recommended" > "$settings_dir/settings.tmp.json" 2>/dev/null; then
@@ -271,6 +352,39 @@ configure_vscode_settings() {
   echo -e "    ${ARROW} File nesting (package.json groups config files)"
   echo -e "    ${ARROW} Sidebar on right, minimap off, sticky scroll on"
   echo -e "  ${DIM}File: ${settings_file}${RESET}"
+
+  # Keybindings
+  local keybindings_file="$settings_dir/keybindings.json"
+  local recommended_keys="${INSTALLER_ROOT}/installer/config/vscode-keybindings.json"
+
+  if [[ -f "$keybindings_file" ]]; then
+    if ! command -v jq &>/dev/null; then
+      print_warn "jq is not installed — cannot merge keybindings"
+      log "SKIPPED: VS Code keybindings merge (jq not installed)"
+    else
+      # Merge: add new keybindings that don't conflict with existing ones
+      backup_file "$keybindings_file"
+      if jq -s '.[0] + [.[1][] | select(.key as $k | .[0] | map(.key) | index($k) | not)]' "$keybindings_file" "$recommended_keys" > "$settings_dir/keybindings.tmp.json" 2>/dev/null; then
+        mv "$settings_dir/keybindings.tmp.json" "$keybindings_file"
+        print_success "Keybindings merged (existing bindings preserved)"
+      else
+        print_error "Failed to merge keybindings (jq error)"
+        rm -f "$settings_dir/keybindings.tmp.json"
+        log "FAILED: VS Code keybindings merge"
+      fi
+    fi
+  else
+    cp "$recommended_keys" "$keybindings_file"
+    print_success "Keybindings created (18 shortcuts)"
+  fi
+
+  echo -e "  ${DIM}Key bindings added:${RESET}"
+  echo -e "    ${ARROW} Alt+1/2/3 — focus editor groups"
+  echo -e "    ${ARROW} Ctrl+Shift+Up/Down — move lines"
+  echo -e "    ${ARROW} Ctrl+Shift+D — duplicate selection"
+  echo -e "    ${ARROW} Cmd+Alt+O — organize imports"
+  echo -e "    ${ARROW} Cmd+Alt+M — zen mode, Cmd+Alt+P — recent projects"
+  echo -e "  ${DIM}File: ${keybindings_file}${RESET}"
 
   log "VS Code settings configured"
 }

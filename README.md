@@ -174,7 +174,7 @@ make help              # Show all available commands
 |-----------|-------------|
 | [Docker](src/editor/extensions/docker.md) | Manage containers and images from VS Code |
 | [Thunder Client](src/editor/extensions/thunder-client.md) | Lightweight REST API client |
-| [tldraw](src/editor/extensions/tldraw.md) | Infinite canvas whiteboard and diagramming |
+| [Excalidraw](src/editor/extensions/excalidraw.md) | Whiteboard and diagramming tool |
 
 #### Media
 

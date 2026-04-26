@@ -31,10 +31,10 @@ for entry in "${APP_ENTRIES[@]}"; do
   status=$(get_status_label "" "$check_type" "$check_value")
   if [[ "$status" == "installed" ]]; then
     echo -e "  ${CHECK} ${local_name}"
-    ((installed++))
+    installed=$((installed + 1))
   else
     echo -e "  ${CROSS} ${local_name} ${DIM}— not installed${RESET}"
-    ((missing++))
+    missing=$((missing + 1))
   fi
 done
 
@@ -48,10 +48,10 @@ for entry in "${DEVTOOL_ENTRIES[@]}"; do
   status=$(get_status_label "" "$check_type" "$check_value")
   if [[ "$status" == "installed" ]]; then
     echo -e "  ${CHECK} ${local_name}"
-    ((installed++))
+    installed=$((installed + 1))
   else
     echo -e "  ${CROSS} ${local_name} ${DIM}— not installed${RESET}"
-    ((missing++))
+    missing=$((missing + 1))
   fi
 done
 
@@ -64,10 +64,10 @@ if is_vscode_installed; then
     ext_id=$(get_field "$entry" 3)
     if is_vscode_extension_installed "$ext_id"; then
       echo -e "  ${CHECK} ${local_name}"
-      ((installed++))
+      installed=$((installed + 1))
     else
       echo -e "  ${CROSS} ${local_name} ${DIM}— not installed${RESET}"
-      ((missing++))
+      missing=$((missing + 1))
     fi
   done
 else

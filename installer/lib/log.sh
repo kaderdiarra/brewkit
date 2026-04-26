@@ -16,22 +16,6 @@ log() {
   echo "[$(date +%H:%M:%S)] $1" >> "$LOG_FILE"
 }
 
-log_cmd() {
-  local label="$1"
-  shift
-  log "CMD: $*"
-  if [[ "$VERBOSE" == "true" ]]; then
-    "$@" 2>&1 | tee -a "$LOG_FILE"
-  else
-    local output
-    output=$("$@" 2>&1)
-    local exit_code=$?
-    echo "$output" >> "$LOG_FILE"
-    log "EXIT: $exit_code"
-    echo "$output"
-    return $exit_code
-  fi
-}
 
 cleanup() {
   local exit_code=$?

@@ -1,0 +1,90 @@
+[
+  // ─── Editor Group Navigation ───────────────────────────────────────────────
+  {
+    "key": "alt+1",
+    "command": "workbench.action.focusFirstEditorGroup"
+  },
+  {
+    "key": "alt+2",
+    "command": "workbench.action.focusSecondEditorGroup"
+  },
+  {
+    "key": "alt+3",
+    "command": "workbench.action.focusThirdEditorGroup"
+  },
+  {
+    "key": "cmd+alt+left",
+    "command": "workbench.action.moveEditorToLeftGroup"
+  },
+  {
+    "key": "cmd+alt+right",
+    "command": "workbench.action.moveEditorToRightGroup"
+  },
+
+  // ─── Terminal ──────────────────────────────────────────────────────────────
+  {
+    "key": "cmd+alt+`",
+    "command": "workbench.action.terminal.split",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "ctrl+tab",
+    "command": "workbench.action.terminal.focusNext",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "ctrl+shift+tab",
+    "command": "workbench.action.terminal.focusPrevious",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "cmd+alt+shift+j",
+    "command": "workbench.action.toggleMaximizedPanel"
+  },
+
+  // ─── Code Actions ─────────────────────────────────────────────────────────
+  {
+    "key": "cmd+alt+o",
+    "command": "editor.action.organizeImports",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+shift+d",
+    "command": "editor.action.duplicateSelection",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+
+  // ─── File & Panel Management ───────────────────────────────────────────────
+  {
+    "key": "cmd+alt+e",
+    "command": "workbench.action.focusSideBar"
+  },
+  {
+    "key": "cmd+alt+b",
+    "command": "workbench.action.toggleActivityBarVisibility"
+  },
+  {
+    "key": "cmd+alt+m",
+    "command": "workbench.action.toggleZenMode"
+  },
+  {
+    "key": "cmd+alt+w",
+    "command": "workbench.action.closeOtherEditors"
+  },
+
+  // ─── Useful Unbound Actions ────────────────────────────────────────────────
+  {
+    "key": "ctrl+shift+up",
+    "command": "editor.action.moveLinesUpAction",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+shift+down",
+    "command": "editor.action.moveLinesDownAction",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "cmd+alt+p",
+    "command": "workbench.action.openRecent"
+  }
+]

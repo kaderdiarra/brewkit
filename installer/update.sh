@@ -13,7 +13,7 @@ echo -e "${ASH}────────────────${RESET}"
 echo ""
 
 # Check for uncommitted changes
-if ! git -C "$INSTALLER_ROOT" diff --quiet 2>/dev/null; then
+if ! git -C "$INSTALLER_ROOT" diff --quiet 2>/dev/null || ! git -C "$INSTALLER_ROOT" diff --cached --quiet 2>/dev/null; then
   echo -e "  ${WARN} You have local changes. Stash or commit them first."
   echo ""
   exit 1

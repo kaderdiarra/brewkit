@@ -5,14 +5,14 @@ RESULTS_SUCCESS=()
 RESULTS_FAILED=()
 
 run_phase_install() {
-  print_step "5" "6" "Installing"
-  print_phase_intro 5
+  print_step "4" "5" "Installing"
+  print_phase_intro 4
 
   local total=${#PLAN_INSTALL[@]}
   local current=0
 
   for plan_item in "${PLAN_INSTALL[@]}"; do
-    ((current++))
+    current=$((current + 1))
     local type="${plan_item%%|*}"
     local entry="${plan_item#*|}"
 
@@ -28,7 +28,10 @@ run_phase_install() {
   done
 
   # Node.js and npm globals (after NVM)
-  if [[ "$INSTALL_NODE" == "true" ]] && is_nvm_installed; then
+  if [[ "$INSTALL_NODE" == "true" ]] && ! is_nvm_installed; then
+    print_warn "Node.js LTS skipped — NVM is not installed"
+    RESULTS_FAILED+=("Node.js LTS (NVM missing)")
+  elif [[ "$INSTALL_NODE" == "true" ]] && is_nvm_installed; then
     local flavor
     flavor=$(get_flavor_text)
     echo -e "  ${ARROW} ${flavor} ${BOLD}Node.js LTS${RESET}..."
@@ -67,15 +70,16 @@ install_app() {
   flavor=$(get_flavor_text)
   echo -ne "  ${ARROW} ${DIM}[${current}/${total}]${RESET} ${flavor} ${BOLD}${name}${RESET}..."
 
+  local brew_exit
   if [[ "$VERBOSE" == "true" ]]; then
     echo ""
-    # shellcheck disable=SC2086 — intentional word splitting for brew flags
-    brew install $brew_args 2>&1 | tee -a "$LOG_FILE"
-    local brew_exit=${PIPESTATUS[0]}
+    # shellcheck disable=SC2086
+    brew install $brew_args 2>&1 | tee -a "$LOG_FILE" || true
+    brew_exit=${PIPESTATUS[0]}
   else
     # shellcheck disable=SC2086
-    brew install $brew_args >>"$LOG_FILE" 2>&1
-    local brew_exit=$?
+    brew install $brew_args >>"$LOG_FILE" 2>&1 || true
+    brew_exit=$?
   fi
 
   if [[ $brew_exit -eq 0 ]]; then
@@ -108,7 +112,7 @@ install_devtool() {
     brew)
       if [[ "$VERBOSE" == "true" ]]; then
         echo ""
-        brew install "$method_value" 2>&1 | tee -a "$LOG_FILE"
+        brew install "$method_value" 2>&1 | tee -a "$LOG_FILE" || true
         [[ ${PIPESTATUS[0]} -eq 0 ]] && success=true
       else
         if brew install "$method_value" >>"$LOG_FILE" 2>&1; then
@@ -119,7 +123,7 @@ install_devtool() {
     cask)
       if [[ "$VERBOSE" == "true" ]]; then
         echo ""
-        brew install --cask "$method_value" 2>&1 | tee -a "$LOG_FILE"
+        brew install --cask "$method_value" 2>&1 | tee -a "$LOG_FILE" || true
         [[ ${PIPESTATUS[0]} -eq 0 ]] && success=true
       else
         if brew install --cask "$method_value" >>"$LOG_FILE" 2>&1; then
@@ -128,10 +132,14 @@ install_devtool() {
       fi
       ;;
     custom)
+      # Custom methods are shell functions — avoid piping (subshell loses function scope)
       if [[ "$VERBOSE" == "true" ]]; then
         echo ""
-        "$method_value" 2>&1 | tee -a "$LOG_FILE"
-        [[ ${PIPESTATUS[0]} -eq 0 ]] && success=true
+        local custom_exit=0
+        local custom_output
+        custom_output=$("$method_value" 2>&1) || custom_exit=$?
+        echo "$custom_output" | tee -a "$LOG_FILE"
+        [[ $custom_exit -eq 0 ]] && success=true
       else
         if "$method_value" >>"$LOG_FILE" 2>&1; then
           success=true
@@ -159,13 +167,14 @@ install_vscode() {
   flavor=$(get_flavor_text)
   echo -ne "  ${ARROW} ${DIM}[${current}/${total}]${RESET} ${flavor} ${BOLD}VS Code${RESET}..."
 
+  local brew_exit
   if [[ "$VERBOSE" == "true" ]]; then
     echo ""
-    brew install --cask visual-studio-code 2>&1 | tee -a "$LOG_FILE"
-    local brew_exit=${PIPESTATUS[0]}
+    brew install --cask visual-studio-code 2>&1 | tee -a "$LOG_FILE" || true
+    brew_exit=${PIPESTATUS[0]}
   else
-    brew install --cask visual-studio-code >>"$LOG_FILE" 2>&1
-    local brew_exit=$?
+    brew install --cask visual-studio-code >>"$LOG_FILE" 2>&1 || true
+    brew_exit=$?
   fi
 
   if [[ $brew_exit -eq 0 ]]; then
@@ -193,7 +202,7 @@ install_extension() {
     echo -e "\r  ${CHECK} ${DIM}[${current}/${total}]${RESET} ${name}                              "
     RESULTS_SUCCESS+=("$name")
   else
-    echo -e "\r  ${CROSS} ${DIM}[${current}/${total}]${RESET} ${name}                              "
+    echo -e "\r  ${CROSS} ${DIM}[${current}/${total}]${RESET} ${name} — failed                    "
     RESULTS_FAILED+=("$name")
   fi
 }

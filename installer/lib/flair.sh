@@ -65,7 +65,6 @@ PHASE_INTROS=(
   ""
   "Let's make sure you have the basics..."
   "Time to pick your weapons."
-  ""
   "Checking what's already on your machine..."
   "Grab a coffee, this might take a minute."
   "Almost there — final touches."

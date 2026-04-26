@@ -5,8 +5,8 @@ PLAN_INSTALL=()
 PLAN_SKIP=()
 
 run_phase_resolve() {
-  print_step "4" "6" "Resolving dependencies"
-  print_phase_intro 4
+  print_step "3" "5" "Resolving dependencies"
+  print_phase_intro 3
 
   # Pre-cache install status for fast lookups
   echo -ne "  ${ARROW} Checking installed software..."
@@ -31,11 +31,11 @@ run_phase_resolve() {
     if [[ "$status" == "installed" ]]; then
       PLAN_SKIP+=("app|$entry")
       print_skip "$name — already installed"
-      ((total_installed++))
+      total_installed=$((total_installed + 1))
     else
       PLAN_INSTALL+=("app|$entry")
       print_arrow "$name — will install"
-      ((total_new++))
+      total_new=$((total_new + 1))
     fi
   done
 
@@ -50,11 +50,11 @@ run_phase_resolve() {
     if [[ "$status" == "installed" ]]; then
       PLAN_SKIP+=("devtool|$entry")
       print_skip "$name — already installed"
-      ((total_installed++))
+      total_installed=$((total_installed + 1))
     else
       PLAN_INSTALL+=("devtool|$entry")
       print_arrow "$name — will install"
-      ((total_new++))
+      total_new=$((total_new + 1))
     fi
   done
 
@@ -63,7 +63,7 @@ run_phase_resolve() {
     if ! is_vscode_installed; then
       print_arrow "VS Code — will install (required for extensions)"
       PLAN_INSTALL+=("vscode|install")
-      ((total_new++))
+      total_new=$((total_new + 1))
     else
       print_skip "VS Code — already installed"
     fi
@@ -76,18 +76,18 @@ run_phase_resolve() {
     ext_id=$(get_field "$entry" 3)
     if is_vscode_extension_installed "$ext_id"; then
       PLAN_SKIP+=("ext|$entry")
-      ((total_installed++))
+      total_installed=$((total_installed + 1))
     else
       PLAN_INSTALL+=("ext|$entry")
-      ((total_new++))
+      total_new=$((total_new + 1))
     fi
   done
 
   local system_count=${#SELECTED_SYSTEM[@]}
   local config_count=0
-  [[ "$CONFIGURE_GIT" == "true" ]] && ((config_count++))
-  [[ "$CONFIGURE_SSH" == "true" ]] && ((config_count++))
-  [[ ${#SELECTED_SHELL_OPTIONS[@]} -gt 0 ]] && ((config_count++))
+  [[ "$CONFIGURE_GIT" == "true" ]] && config_count=$((config_count + 1))
+  [[ "$CONFIGURE_SSH" == "true" ]] && config_count=$((config_count + 1))
+  [[ ${#SELECTED_SHELL_OPTIONS[@]} -gt 0 ]] && config_count=$((config_count + 1))
 
   echo ""
   echo -e "  ${BOLD}Plan summary:${RESET}"
